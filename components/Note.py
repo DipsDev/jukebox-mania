@@ -26,7 +26,7 @@ class Note(pygame.sprite.Sprite):
         print(d)
         if (d <= game.GameSettings.offset or self._sprite.get_rect().colliderect(self._adjacent_key.get_rect())) \
                 and self._adjacent_key.is_clicked():
-            self.hit_sound.set_volume(0.03)
+            self.hit_sound.set_volume(0.3)
             self.hit_sound.play()
             self.kill()
         self._pos = self._pos[0], self._pos[1] + self._tile_speed

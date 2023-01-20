@@ -12,7 +12,7 @@ class GameWindow:
 
 
 class GameSettings:
-    debug_mode = True  # Print variables or no
+    debug_mode = False  # Print variables or no
     game_fps = 60
     keys_height = 650
     offset = 33  # Pixel difference tolerance

@@ -28,6 +28,7 @@ class Level:
     def start(self):
         if not game.GameSettings.debug_mode:
             pygame.mixer.music.load(self.__level_data[3])
+            pygame.mixer.music.set_volume(0.4)
             pygame.mixer.music.play()
 
     def tick(self):
