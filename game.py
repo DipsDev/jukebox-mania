@@ -15,7 +15,8 @@ class GameSettings:
     debug_mode = True  # Print variables or no
     game_fps = 60
     keys_height = 650
-    offset = 5  # Pixel difference tolerance
+    offset = 33  # Pixel difference tolerance
+    holding_offset = 0.33
 
 
 f_key = KeyboardButton("F", (1440 / 2 - 45, GameSettings.keys_height), pygame.K_f)

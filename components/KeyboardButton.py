@@ -8,8 +8,6 @@ class KeyboardButton(pygame.sprite.Sprite):
     def __init__(self, name: str, pos: tuple, key_constant):
         super().__init__()
         self.__name = name
-        self.__sound_played = False
-        self.hit_sound = pygame.mixer.Sound('./assets/sounds/hitsound.wav')
         self.__pos = pos
         self.__holding_time = 0
         self.__key_constant = key_constant
@@ -53,11 +51,7 @@ class KeyboardButton(pygame.sprite.Sprite):
                 if game.GameSettings.debug_mode:
                     print(f"{self.__name} was pressed for {self.__holding_time / 60} seconds")
                 self.__holding_time = 0
-                self.__sound_played = False
             return
-        if not self.__sound_played:
-            self.hit_sound.play()
-            self.__sound_played = True
         self.__sprite = self.__anim_2
         self.__holding_time += 1
 

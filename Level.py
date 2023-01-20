@@ -43,7 +43,7 @@ class Level:
                 pos = (self.__keys[index].get_pos()[0], 0)
                 if sign.isnumeric():
                     self.__active_notes.add(LongNote(pos, self.__level_data[2], self.__keys[index],
-                                                     Utils.from_bpm_to_ms(self.__level_data[1]) + self.__level_data[2] *
+                                                     Utils.from_bpm_to_ms(self.__level_data[1]) * 60 / 1000 * self.__level_data[2] *
                                                      int(sign), int(sign)))
                 if sign == NOTE:
 
