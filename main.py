@@ -11,15 +11,9 @@ from Level import Level
 def main():
     # Fill background
     game.GameWindow.game_background = pygame.Surface(GameWindow.screen.get_size()).convert()
+    game.GameWindow.game_background.fill((255, 255, 255))
 
-    # Levels
-    level1_data = LevelLoader().load_level_beatmap("gamor_and_manoi")
-    level1 = Level(level1_data, game.keyboard_keys)
-    play = PlayScene(level1)
-
-    GameWindow.screen.blit(game.GameWindow.game_background, (0, 0))
-    pygame.display.flip()
-
+    level_loaded = None
     # Event loop
     while True:
         for event in pygame.event.get():
@@ -30,7 +24,10 @@ def main():
         if game.GameWindow.game_state == game.GameStates.LEVEL_BROWSER:
             LevelBrowser().render(game.GameWindow.screen)
         elif game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
-            play.play(game.GameWindow.screen)
+            if not level_loaded:
+                level_loaded = PlayScene(game.GameWindow.level_running)
+            else:
+                level_loaded.play(game.GameWindow.screen)
         pygame.display.flip()
         GameWindow.clock.tick(game.GameConstants.GAME_FPS)
 

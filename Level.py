@@ -1,6 +1,7 @@
 import pygame.time
 
 import game
+from assets.assets_loading import background_img
 from components.LongNote import LongNote
 from components.Note import Note
 from utils import Utils
@@ -20,21 +21,25 @@ class Level:
     def __init__(self, level_data, keys):
         self.__keys = keys
         self.__line_counter = 0
+        self.__level_started = False
+        self.__starting_timer = 300
         self.__level_score = 0
         self.__level_data = level_data
         self.__active_notes = pygame.sprite.Group()
         self.__time_from_last_call = pygame.time.get_ticks() + Utils.from_bpm_to_ms(self.__level_data[1])
 
     def start(self):
+        game.GameWindow.game_background.blit(background_img, (0, 0))
         game.GameWindow.level_running = self
         game.GameWindow.combo_counter = 0
+        song_name = game.main_font.render(f"Currently Playing: {self.__level_data[-1][0]}", True, (229, 161, 89))
+        game.GameWindow.game_background.blit(song_name, (1440 / 2 - song_name.get_width() / 2, 130))
+
+    def start_music(self):
         if not game.GameConstants.DEBUG_MODE:
             pygame.mixer.music.load(self.__level_data[3])
             pygame.mixer.music.set_volume(0.4)
             pygame.mixer.music.play()
-        song_name = game.main_font.render(f"Currently Playing: {self.__level_data[-1][0]}", True, (229, 161, 89))
-        song_artist = game.main_font.render(f"By: {self.__level_data[-1][1]}", True, (255, 255, 255))
-        game.GameWindow.game_background.blit(song_name, (1440 / 2 - song_name.get_width() / 2, 130))
 
     def add_user_score(self, score: float):
         if score > 0:
@@ -46,10 +51,20 @@ class Level:
         self.__level_score = max(self.__level_score, 0)
 
     def tick(self):
-        time = pygame.time.get_ticks()
+        if self.__starting_timer >= 0:
+            r = game.main_font.render(f"Starting in {self.__starting_timer // 100 + 1}", True, (255, 255, 255))
+            game.GameWindow.screen.blit(r, r.get_rect(center=(1440 / 2, 800 / 2)))
+            self.__starting_timer -= 1
+            return
+        if not self.__level_started:
+            self.start_music()
+            self.__level_started = True
+
         if len(self.__level_data[0]) <= self.__line_counter:
             print("Level finished")
             return
+
+        time = pygame.time.get_ticks()
 
         # Simple notes logic
         if time > self.__time_from_last_call:
@@ -76,4 +91,3 @@ class Level:
         for note in self.__active_notes:
             note.render(surface)
             note.move()
-

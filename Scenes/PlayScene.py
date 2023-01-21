@@ -10,13 +10,9 @@ class PlayScene:
         self.__level = level
         self.__first_time = True
 
-    def load(self):
-        game.GameWindow.game_background.blit(background_img, (0, 0))
-        self.__level.start()
-
     def play(self, screen):
         if self.__first_time:
-            self.load()
+            self.__level.start()
             self.__first_time = False
         self.__level.tick()
         self.__level.render(screen)

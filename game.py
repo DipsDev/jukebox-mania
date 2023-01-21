@@ -19,7 +19,7 @@ class GameWindow:
     screen = pygame.display.set_mode((1440, 800))
     clock = pygame.time.Clock()
     pygame.display.set_caption('Jukebox Hero')
-    game_state = GameStates.PLAYING_LEVEL
+    game_state = GameStates.LEVEL_BROWSER
     level_running: Level = None
     game_background: pygame.Surface = None
     combo_counter = 0
