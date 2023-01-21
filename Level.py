@@ -20,15 +20,20 @@ class Level:
     def __init__(self, level_data, keys):
         self.__keys = keys
         self.__line_counter = 0
+        self.__level_score = 0
         self.__level_data = level_data
         self.__active_notes = pygame.sprite.Group()
         self.__time_from_last_call = pygame.time.get_ticks() + Utils.from_bpm_to_ms(self.__level_data[1])
 
     def start(self):
+        game.GameWindow.level_running = self
         if not game.GameSettings.debug_mode:
             pygame.mixer.music.load(self.__level_data[3])
             pygame.mixer.music.set_volume(0.4)
             pygame.mixer.music.play()
+
+    def add_user_score(self, score: float):
+        self.__level_score += score
 
     def tick(self):
         time = pygame.time.get_ticks()
@@ -45,7 +50,7 @@ class Level:
                     self.__active_notes.add(LongNote(pos, self.__level_data[2], self.__keys[index],
                                                      Utils.from_bpm_to_ms(self.__level_data[1]) * 60 / 1000 *
                                                      self.__level_data[2] *
-                                                     int(sign), int(sign)))
+                                                     int(sign), Utils.from_bpm_to_ms(self.__level_data[1]) * int(sign)))
                 if sign == NOTE:
                     self.__active_notes.add(Note(pos, self.__level_data[2], self.__keys[index]))
 
@@ -53,6 +58,10 @@ class Level:
             self.__time_from_last_call = time + Utils.from_bpm_to_ms(self.__level_data[1])
 
     def render(self, surface: pygame.Surface):
+        font = pygame.font.Font(pygame.font.get_default_font(), 36)
+        level_score = font.render(f"Score: {self.__level_score}", True, (0, 0, 0))
+        surface.blit(level_score, level_score.get_rect(center=(100, 50)))
         for note in self.__active_notes:
-            note.move()
             note.render(surface)
+            note.move()
+

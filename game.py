@@ -2,6 +2,7 @@ from enum import Enum
 
 import pygame
 
+from Level import Level
 from components.KeyboardButton import KeyboardButton
 
 
@@ -18,10 +19,11 @@ class GameWindow:
     clock = pygame.time.Clock()
     pygame.display.set_caption('Jukebox Hero')
     game_state = GameStates.PLAYING_LEVEL
+    level_running: Level = None
 
 
 class GameSettings:
-    debug_mode = False  # Print variables or no
+    debug_mode = True  # Print variables or no
     game_fps = 60
     keys_height = 695
     offset = 33  # Pixel difference tolerance

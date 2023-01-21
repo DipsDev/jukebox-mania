@@ -42,7 +42,7 @@ class KeyboardButton(pygame.sprite.Sprite):
         return 0 < self.__holding_time / 60 < 0.3
 
     def is_held(self):
-        return 0 < self.__holding_time / 60
+        return 0 < self.__holding_time
 
     def get_holding_time(self):
         return self.__holding_time / 60

@@ -1,22 +1,25 @@
 import pygame.transform
 
+import game
 from components.Note import Note
+from utils import Utils
 
 
 class LongNote(Note):
-    def __init__(self, pos, tile_speed, adjacent_key, height: int, holding_beats: int):
-        super().__init__(pos, tile_speed, adjacent_key, True)
+    def __init__(self, pos, tile_speed, adjacent_key, height: int, holding_ms: int):
+        super().__init__(pos, tile_speed, adjacent_key)
         self._height = height
         self._original_height = height
-        self._holding_beats = holding_beats
-        self._started = False
+        self._holding_ms = holding_ms
         self._holding_time_counter = 0
+        self.__active = True
+        self.__total_rect = None
         self.__middle_long_tile = pygame.image. \
-            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_mid")
+            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_mid.png")
         self.__top_long_tile = pygame.image. \
-            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_top")
+            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_top.png")
         self.__bot_long_tile = pygame.image. \
-            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_bot")
+            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_bot.png")
         self.resize()
 
     def resize(self):
@@ -26,19 +29,34 @@ class LongNote(Note):
                                                                 round(self._height + self._original_height)))
 
     def render(self, surface: pygame.Surface):
-        pos = (self._pos[0], self._pos[1] + self._original_height / 2)
-        if not self._started:
-            surface.blit(self.__bot_long_tile, self.__bot_long_tile.get_rect(midbottom=pos))
-            self._started = True
-            return
-        surface.blit(self.__middle_long_tile, self.__middle_long_tile.get_rect(midbottom=(pos[0], pos[1] + self.__bot_long_tile.get_height())))
+        pos = (self._pos[0], self._pos[1] + self._original_height / 2 - 5)
+        surface.blit(self.__bot_long_tile,
+                     self.__bot_long_tile.get_rect(center=(pos[0], self._pos[1])))
+        surface.blit(self.__middle_long_tile,
+                     self.__middle_long_tile.get_rect(
+                         midbottom=(pos[0], pos[1] - 3.3 * self.__bot_long_tile.get_height())))
+        surface.blit(self.__top_long_tile,
+                     self.__top_long_tile.get_rect(
+                         center=(pos[0], pos[1] - self._height - 1.5 * self._original_height)))
 
     def move(self):
-        # Implement Logic!
-        mid_bottom = (self._pos[0], self._pos[1] - self._original_height / 2)
-        is_colliding = self._sprite.get_rect(midbottom=mid_bottom) \
-            .colliderect(self._adjacent_key.get_rect())
+        pos = (self._pos[0], self._pos[1] + self._original_height / 2 - 5)
+        tail = self.__middle_long_tile.get_rect(
+                         midbottom=(pos[0], pos[1] - 3.3 * self.__bot_long_tile.get_height())).midtop
+        wing = self.__middle_long_tile.get_rect(
+                         midbottom=(pos[0], pos[1] - 3.3 * self.__bot_long_tile.get_height())).midbottom
+        is_colliding = tail[1] < self._adjacent_key.get_pos()[1] < wing[1]
+        if is_colliding and (self._adjacent_key.is_held()):
+            self._holding_time_counter += 1
+
+        if self.__active and self._holding_time_counter / game.GameSettings.game_fps >= self._holding_ms / 1000:
+            game.GameWindow.level_running.add_user_score(
+                3.2 * round(min(self._holding_time_counter, (self._holding_ms // 1000))))
+            self.__active = False
+
+        if tail[1] >= 1.3 * round(self._height + self._original_height):
+            game.GameWindow.level_running.add_user_score(-2
+                                                         * round((self._holding_ms / 1000 - self._holding_time_counter / game.GameSettings.game_fps)))
+            self.kill()
 
         self._pos = self._pos[0], self._pos[1] + self._tile_speed
-        if self._pos[1] > 800 + self._sprite.get_height():
-            self.kill()
