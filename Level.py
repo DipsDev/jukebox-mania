@@ -27,7 +27,8 @@ class Level:
 
     def start(self):
         game.GameWindow.level_running = self
-        if not game.GameSettings.debug_mode:
+        game.GameWindow.combo_counter = 0
+        if not game.GameConstants.DEBUG_MODE:
             pygame.mixer.music.load(self.__level_data[3])
             pygame.mixer.music.set_volume(0.4)
             pygame.mixer.music.play()
@@ -36,7 +37,12 @@ class Level:
         game.GameWindow.game_background.blit(song_name, (1440 / 2 - song_name.get_width() / 2, 130))
 
     def add_user_score(self, score: float):
-        self.__level_score += score
+        if score > 0:
+            game.GameWindow.combo_counter += 1
+            self.__level_score += round(score * (game.GameWindow.combo_counter * game.GameConstants.COMBO_MULTIPLIER))
+        else:
+            self.__level_score += score
+            game.GameWindow.combo_counter = 0
         self.__level_score = max(self.__level_score, 0)
 
     def tick(self):
@@ -65,6 +71,8 @@ class Level:
     def render(self, surface: pygame.Surface):
         level_score = game.main_font.render(f"Score: {self.__level_score}", True, (255, 255, 255))
         surface.blit(level_score, level_score.get_rect(center=(1440 / 2, 100)))
+        combo_counter = game.small_font.render(f"X {game.GameWindow.combo_counter}", True, (204, 190, 234))
+        surface.blit(combo_counter, combo_counter.get_rect(center=(1440 / 2, 70)))
         for note in self.__active_notes:
             note.render(surface)
             note.move()

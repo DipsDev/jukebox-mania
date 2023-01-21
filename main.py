@@ -12,8 +12,6 @@ def main():
     # Fill background
     game.GameWindow.game_background = pygame.Surface(GameWindow.screen.get_size()).convert()
 
-
-
     # Levels
     level1_data = LevelLoader().load_level_beatmap("gamor_and_manoi")
     level1 = Level(level1_data, game.keyboard_keys)
@@ -34,7 +32,7 @@ def main():
         elif game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
             play.play(game.GameWindow.screen)
         pygame.display.flip()
-        GameWindow.clock.tick(game.GameSettings.game_fps)
+        GameWindow.clock.tick(game.GameConstants.GAME_FPS)
 
 
 if __name__ == '__main__':

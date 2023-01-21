@@ -49,14 +49,14 @@ class LongNote(Note):
         if is_colliding and (self._adjacent_key.is_held()):
             self._holding_time_counter += 1
 
-        if self.__active and self._holding_time_counter / game.GameSettings.game_fps >= self._holding_ms / 1000:
+        if self.__active and self._holding_time_counter / game.GameConstants.GAME_FPS >= self._holding_ms / 1000:
             game.GameWindow.level_running.add_user_score(
                 round(1.3 * min(self._holding_time_counter, (self._holding_ms // 100))))
             self.__active = False
 
         if tail[1] >= 1.3 * round(self._height + self._original_height):
             game.GameWindow.level_running.add_user_score(-2
-                                                         * round((self._holding_ms / 1000 - self._holding_time_counter / game.GameSettings.game_fps)))
+                                                         * round((self._holding_ms / 1000 - self._holding_time_counter / game.GameConstants.GAME_FPS)))
             self.kill()
 
         self._pos = self._pos[0], self._pos[1] + self._tile_speed

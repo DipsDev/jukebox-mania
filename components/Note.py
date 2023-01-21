@@ -17,8 +17,9 @@ class Note(pygame.sprite.Sprite):
         self._sprite = pygame.image.load(f"./assets/notes/{adjacent_key.get_color()}_tile.png").convert_alpha()
 
     def move(self):
-        d = Utils.get_distance(self._pos[1], game.GameSettings.keys_height)
-        if (d <= game.GameSettings.offset or self._sprite.get_rect().colliderect(self._adjacent_key.get_rect())) \
+        d = Utils.get_distance(self._pos[1], game.GameConstants.KEYS_HEIGHT)
+        if (d <= game.GameConstants.TOLERANCE_OFFSET or self._sprite.get_rect().colliderect(
+                self._adjacent_key.get_rect())) \
                 and self._adjacent_key.is_clicked():
             self.hit_sound.set_volume(0.3)
             self.hit_sound.play()

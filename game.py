@@ -22,22 +22,24 @@ class GameWindow:
     game_state = GameStates.PLAYING_LEVEL
     level_running: Level = None
     game_background: pygame.Surface = None
+    combo_counter = 0
 
 
-class GameSettings:
-    debug_mode = True  # Print variables or no
-    game_fps = 60
-    keys_height = 695
-    offset = 50  # Pixel difference tolerance
-    holding_offset = 0.33
+class GameConstants:
+    COMBO_MULTIPLIER = 0.1
+    DEBUG_MODE = False  # Print variables or no
+    GAME_FPS = 60
+    KEYS_HEIGHT = 695
+    TOLERANCE_OFFSET = 50  # Pixel difference tolerance
+    HOLDING_OFFSET = 0.33
 
 
 # Game keys
-f_key = KeyboardButton("F", (615, GameSettings.keys_height), pygame.K_f, "yellow")
-d_key = KeyboardButton("D", (395, GameSettings.keys_height), pygame.K_d, "green")
-j_key = KeyboardButton("J", (615 + 220 - 4, GameSettings.keys_height), pygame.K_j, "blue")
-k_key = KeyboardButton("K", (615 + 220 * 2 + 9, GameSettings.keys_height), pygame.K_k, "pink")
+f_key = KeyboardButton("F", (615, GameConstants.KEYS_HEIGHT), pygame.K_f, "yellow")
+d_key = KeyboardButton("D", (395, GameConstants.KEYS_HEIGHT), pygame.K_d, "green")
+j_key = KeyboardButton("J", (615 + 220 - 4, GameConstants.KEYS_HEIGHT), pygame.K_j, "blue")
+k_key = KeyboardButton("K", (615 + 220 * 2 + 9, GameConstants.KEYS_HEIGHT), pygame.K_k, "pink")
 keyboard_keys = [f_key, d_key, j_key, k_key]
 
-
-main_font = pygame.font.Font("./assets/fonts/Peaberry-Base.otf",32)
+main_font = pygame.font.Font("./assets/fonts/Peaberry-Doublespace.otf", 32)
+small_font = pygame.font.Font("./assets/fonts/Peaberry-Base.otf", 16)

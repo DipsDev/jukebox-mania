@@ -52,7 +52,7 @@ class KeyboardButton(pygame.sprite.Sprite):
         if not keys[self.__key_constant]:
             self.__sprite = self.__normal
             if self.__holding_time > 0:
-                if game.GameSettings.debug_mode:
+                if game.GameConstants.DEBUG_MODE:
                     print(f"{self.__name} was pressed for {self.__holding_time / 60} seconds")
                 self.__holding_time = 0
             return
