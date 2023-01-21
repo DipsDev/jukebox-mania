@@ -91,3 +91,4 @@ class Level:
         for note in self.__active_notes:
             note.render(surface)
             note.move()
+        surface.blit(game.keys_background, game.keys_background.get_rect(topleft=(204, 730)))

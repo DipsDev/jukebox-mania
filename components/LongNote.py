@@ -42,9 +42,9 @@ class LongNote(Note):
     def move(self):
         pos = (self._pos[0], self._pos[1] + self._original_height / 2 - 5)
         tail = self.__middle_long_tile.get_rect(
-                         midbottom=(pos[0], pos[1] - 3.3 * self.__bot_long_tile.get_height())).midtop
+            midbottom=(pos[0], pos[1] - 3.3 * self.__bot_long_tile.get_height())).midtop
         wing = self.__middle_long_tile.get_rect(
-                         midbottom=(pos[0], pos[1] - 3.3 * self.__bot_long_tile.get_height())).midbottom
+            midbottom=(pos[0], pos[1] - 3.3 * self.__bot_long_tile.get_height())).midbottom
         is_colliding = tail[1] < self._adjacent_key.get_pos()[1] < wing[1]
         if is_colliding and (self._adjacent_key.is_held()):
             self._holding_time_counter += 1
@@ -55,8 +55,8 @@ class LongNote(Note):
             self.__active = False
 
         if tail[1] >= 1.3 * round(self._height + self._original_height):
-            game.GameWindow.level_running.add_user_score(-2
-                                                         * round((self._holding_ms / 1000 - self._holding_time_counter / game.GameConstants.GAME_FPS)))
+            if self.__active:
+                game.GameWindow.level_running.add_user_score(self._holding_time_counter // 10)
             self.kill()
 
         self._pos = self._pos[0], self._pos[1] + self._tile_speed

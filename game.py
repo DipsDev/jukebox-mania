@@ -18,7 +18,7 @@ class GameWindow:
     pygame.font.init()
     screen = pygame.display.set_mode((1440, 800))
     clock = pygame.time.Clock()
-    pygame.display.set_caption('Jukebox Hero')
+    pygame.display.set_caption('Jukebox Mania')
     game_state = GameStates.LEVEL_BROWSER
     level_running: Level = None
     game_background: pygame.Surface = None
@@ -35,11 +35,14 @@ class GameConstants:
 
 
 # Game keys
-f_key = KeyboardButton("F", (615, GameConstants.KEYS_HEIGHT), pygame.K_f, "yellow")
-d_key = KeyboardButton("D", (395, GameConstants.KEYS_HEIGHT), pygame.K_d, "green")
+f_key = KeyboardButton("F", (615, GameConstants.KEYS_HEIGHT), pygame.K_f, "green")
+d_key = KeyboardButton("D", (395, GameConstants.KEYS_HEIGHT), pygame.K_d, "yellow")
 j_key = KeyboardButton("J", (615 + 220 - 4, GameConstants.KEYS_HEIGHT), pygame.K_j, "blue")
 k_key = KeyboardButton("K", (615 + 220 * 2 + 9, GameConstants.KEYS_HEIGHT), pygame.K_k, "pink")
 keyboard_keys = [f_key, d_key, j_key, k_key]
 
 main_font = pygame.font.Font("./assets/fonts/Peaberry-Doublespace.otf", 32)
 small_font = pygame.font.Font("./assets/fonts/Peaberry-Base.otf", 16)
+
+
+keys_background = pygame.image.load("./assets/keys_background.png")
