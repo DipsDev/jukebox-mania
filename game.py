@@ -30,7 +30,7 @@ class GameConstants:
     DEBUG_MODE = False  # Print variables or no
     GAME_FPS = 60
     KEYS_HEIGHT = 695
-    TOLERANCE_OFFSET = 50  # Pixel difference tolerance
+    TOLERANCE_OFFSET = 78  # Pixel difference tolerance
     HOLDING_OFFSET = 0.33
 
 

@@ -39,7 +39,7 @@ class KeyboardButton(pygame.sprite.Sprite):
                                                 self.__anim_2.get_height() * scale_constant))
 
     def is_clicked(self):
-        return 0 < self.__holding_time / 60 < 0.3
+        return 0 < self.__holding_time / 60 < 1
 
     def is_held(self):
         return 0 < self.__holding_time

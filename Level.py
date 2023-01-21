@@ -67,7 +67,7 @@ class Level:
         time = pygame.time.get_ticks()
 
         # Simple notes logic
-        if time > self.__time_from_last_call:
+        if time >= self.__time_from_last_call:
             for index, sign in enumerate(self.__level_data[0][self.__line_counter]):
                 if sign not in NOTES and not sign.isnumeric():
                     continue
@@ -88,7 +88,7 @@ class Level:
         surface.blit(level_score, level_score.get_rect(center=(1440 / 2, 100)))
         combo_counter = game.small_font.render(f"X {game.GameWindow.combo_counter}", True, (204, 190, 234))
         surface.blit(combo_counter, combo_counter.get_rect(center=(1440 / 2, 70)))
-        for note in self.__active_notes:
-            note.render(surface)
-            note.move()
         surface.blit(game.keys_background, game.keys_background.get_rect(topleft=(204, 730)))
+        for note in self.__active_notes:
+            note.move()
+            note.render(surface)
