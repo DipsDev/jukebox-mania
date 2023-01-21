@@ -8,6 +8,8 @@ class LevelLoader:
         tile_data = []
         level_speed = 10
         bpm = None
+        song_name = "Unknown"
+        artist = "Unknown"
         reading_tiles = False
         if not os.path.exists(f"./assets/levels/{name}/{name}.beatmap"):
             raise Exception(f"Cannot find beatmap '{name}'")
@@ -21,6 +23,8 @@ class LevelLoader:
                     level_speed = data[index + 1]
                 if line.startswith("ARTIST"):
                     artist = data[index + 1]
+                if line.startswith("NAME"):
+                    song_name = data[index+1]
                 if line.startswith("TILES"):
                     reading_tiles = True
                 elif reading_tiles:
@@ -32,7 +36,7 @@ class LevelLoader:
         if not os.path.exists(music_path):
             raise Exception(f"Cannot find music file for level: '{name}'")
 
-        return tile_data, float(bpm), float(level_speed), music_path
+        return tile_data, float(bpm), float(level_speed), music_path, (song_name.strip(), artist.strip())
 
     @staticmethod
     def get_available_levels():

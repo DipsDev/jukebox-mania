@@ -51,7 +51,7 @@ class LongNote(Note):
 
         if self.__active and self._holding_time_counter / game.GameSettings.game_fps >= self._holding_ms / 1000:
             game.GameWindow.level_running.add_user_score(
-                3.2 * round(min(self._holding_time_counter, (self._holding_ms // 1000))))
+                round(1.3 * min(self._holding_time_counter, (self._holding_ms // 100))))
             self.__active = False
 
         if tail[1] >= 1.3 * round(self._height + self._original_height):

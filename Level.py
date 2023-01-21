@@ -31,13 +31,18 @@ class Level:
             pygame.mixer.music.load(self.__level_data[3])
             pygame.mixer.music.set_volume(0.4)
             pygame.mixer.music.play()
+        song_name = game.main_font.render(f"Currently Playing: {self.__level_data[-1][0]}", True, (229, 161, 89))
+        song_artist = game.main_font.render(f"By: {self.__level_data[-1][1]}", True, (255, 255, 255))
+        game.GameWindow.game_background.blit(song_name, (1440 / 2 - song_name.get_width() / 2, 130))
 
     def add_user_score(self, score: float):
         self.__level_score += score
+        self.__level_score = max(self.__level_score, 0)
 
     def tick(self):
         time = pygame.time.get_ticks()
         if len(self.__level_data[0]) <= self.__line_counter:
+            print("Level finished")
             return
 
         # Simple notes logic
@@ -58,9 +63,8 @@ class Level:
             self.__time_from_last_call = time + Utils.from_bpm_to_ms(self.__level_data[1])
 
     def render(self, surface: pygame.Surface):
-        font = pygame.font.Font(pygame.font.get_default_font(), 36)
-        level_score = font.render(f"Score: {self.__level_score}", True, (0, 0, 0))
-        surface.blit(level_score, level_score.get_rect(center=(100, 50)))
+        level_score = game.main_font.render(f"Score: {self.__level_score}", True, (255, 255, 255))
+        surface.blit(level_score, level_score.get_rect(center=(1440 / 2, 100)))
         for note in self.__active_notes:
             note.render(surface)
             note.move()

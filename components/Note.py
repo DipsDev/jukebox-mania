@@ -25,7 +25,7 @@ class Note(pygame.sprite.Sprite):
             game.GameWindow.level_running.add_user_score(25)
             self.kill()
         self._pos = self._pos[0], self._pos[1] + self._tile_speed
-        if self._pos[1] > 800:
+        if self._pos[1] > 800 + self._sprite.get_height() + 10:
             game.GameWindow.level_running.add_user_score(-15)
             self.kill()
 

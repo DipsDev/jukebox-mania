@@ -1,5 +1,8 @@
+import pygame
+
 import game
 from Level import Level
+from assets.assets_loading import background_img
 
 
 class PlayScene:
@@ -8,6 +11,7 @@ class PlayScene:
         self.__first_time = True
 
     def load(self):
+        game.GameWindow.game_background.blit(background_img, (0, 0))
         self.__level.start()
 
     def play(self, screen):
