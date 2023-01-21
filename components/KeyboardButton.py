@@ -5,9 +5,10 @@ import game
 
 class KeyboardButton(pygame.sprite.Sprite):
 
-    def __init__(self, name: str, pos: tuple, key_constant):
+    def __init__(self, name: str, pos: tuple, key_constant, key_color):
         super().__init__()
         self.__name = name
+        self.__color = key_color
         self.__pos = pos
         self.__holding_time = 0
         self.__key_constant = key_constant
@@ -15,6 +16,9 @@ class KeyboardButton(pygame.sprite.Sprite):
         self.__anim_2 = pygame.image.load(f"./assets/keys/{name}/clicked.png").convert_alpha()
         self.__sprite = self.__normal
         self.init_images()
+
+    def get_color(self):
+        return self.__color
 
     def get_pos(self):
         return self.__pos

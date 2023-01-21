@@ -17,19 +17,19 @@ class GameWindow:
     screen = pygame.display.set_mode((1440, 800))
     clock = pygame.time.Clock()
     pygame.display.set_caption('Jukebox Hero')
-    game_state = GameStates.LEVEL_BROWSER
+    game_state = GameStates.PLAYING_LEVEL
 
 
 class GameSettings:
     debug_mode = False  # Print variables or no
     game_fps = 60
-    keys_height = 650
+    keys_height = 695
     offset = 33  # Pixel difference tolerance
     holding_offset = 0.33
 
 
-f_key = KeyboardButton("F", (1440 / 2 - 45, GameSettings.keys_height), pygame.K_f)
-d_key = KeyboardButton("D", (1440 / 2 - 90 - 45, GameSettings.keys_height), pygame.K_d)
-j_key = KeyboardButton("J", (1440 / 2 + 45, GameSettings.keys_height), pygame.K_j)
-k_key = KeyboardButton("K", (1440 / 2 + 90 + 45, GameSettings.keys_height), pygame.K_k)
+f_key = KeyboardButton("F", (615, GameSettings.keys_height), pygame.K_f, "yellow")
+d_key = KeyboardButton("D", (395, GameSettings.keys_height), pygame.K_d, "green")
+j_key = KeyboardButton("J", (615 + 220 - 4, GameSettings.keys_height), pygame.K_j, "blue")
+k_key = KeyboardButton("K", (615 + 220 * 2 + 9, GameSettings.keys_height), pygame.K_k, "pink")
 keyboard_keys = [f_key, d_key, j_key, k_key]

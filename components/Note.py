@@ -14,16 +14,10 @@ class Note(pygame.sprite.Sprite):
         self._pos = pos
         self.hit_sound = pygame.mixer.Sound('./assets/sounds/hitsound.wav')
         self._tile_speed = tile_speed
-        self._sprite = pygame.image.load("./assets/tile.png").convert_alpha()
-        if not long_tile:
-            self.resize()
-
-    def resize(self):
-        self._sprite = pygame.transform.scale(self._sprite, (self._adjacent_key.get_dimensions()[0], 30))
+        self._sprite = pygame.image.load(f"./assets/notes/{adjacent_key.get_color()}_tile.png").convert_alpha()
 
     def move(self):
         d = Utils.get_distance(self._pos[1], game.GameSettings.keys_height)
-        print(d)
         if (d <= game.GameSettings.offset or self._sprite.get_rect().colliderect(self._adjacent_key.get_rect())) \
                 and self._adjacent_key.is_clicked():
             self.hit_sound.set_volume(0.3)

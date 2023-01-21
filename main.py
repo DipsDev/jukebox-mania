@@ -12,7 +12,8 @@ def main():
     # Fill background
     background = pygame.Surface(GameWindow.screen.get_size())
     background = background.convert()
-    background.fill((250, 250, 250))
+    background_img = pygame.image.load("./assets/background.png")
+    background.blit(background_img, (0, 0))
 
     GameWindow.screen.blit(background, (0, 0))
     pygame.display.flip()
@@ -31,6 +32,8 @@ def main():
         GameWindow.screen.blit(background, (0, 0))
         if game.GameWindow.game_state == game.GameStates.LEVEL_BROWSER:
             LevelBrowser().render(game.GameWindow.screen)
+        if game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
+            play.play(game.GameWindow.screen)
         pygame.display.flip()
         GameWindow.clock.tick(game.GameSettings.game_fps)
 

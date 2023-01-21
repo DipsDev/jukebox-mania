@@ -16,7 +16,7 @@ class LongNote(Note):
 
     def resize(self):
         self._original_height = self._sprite.get_height()
-        self._sprite = pygame.transform.scale(self._sprite, (self._adjacent_key.get_dimensions()[0],
+        self._sprite = pygame.transform.scale(self._sprite, (self._sprite.get_width(),
                                                              self._height + self._original_height))
 
     def render(self, surface: pygame.Surface):
