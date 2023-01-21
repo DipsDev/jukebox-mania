@@ -1,6 +1,7 @@
 import pygame
 
 import game
+from Scenes.LevelBrowser import LevelBrowser
 from Scenes.PlayScene import PlayScene
 from utils.LevelLoader import LevelLoader
 from game import GameWindow
@@ -17,7 +18,7 @@ def main():
     pygame.display.flip()
 
     # Levels
-    level1_data = LevelLoader().load_level_beatmap("level_1")
+    level1_data = LevelLoader().load_level_beatmap("gamor_and_manoi")
     level1 = Level(level1_data, game.keyboard_keys)
     play = PlayScene(level1)
 
@@ -28,7 +29,8 @@ def main():
                 return
 
         GameWindow.screen.blit(background, (0, 0))
-        play.play(GameWindow.screen)
+        if game.GameWindow.game_state == game.GameStates.LEVEL_BROWSER:
+            LevelBrowser().render(game.GameWindow.screen)
         pygame.display.flip()
         GameWindow.clock.tick(game.GameSettings.game_fps)
 

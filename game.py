@@ -1,6 +1,14 @@
+from enum import Enum
+
 import pygame
 
 from components.KeyboardButton import KeyboardButton
+
+
+class GameStates(str, Enum):
+    PLAYING_LEVEL = "playing_lvl"
+    LEVEL_BROWSER = "browsing_levels"
+    MAIN_MENU = "main_menu"
 
 
 class GameWindow:
@@ -9,6 +17,7 @@ class GameWindow:
     screen = pygame.display.set_mode((1440, 800))
     clock = pygame.time.Clock()
     pygame.display.set_caption('Jukebox Hero')
+    game_state = GameStates.LEVEL_BROWSER
 
 
 class GameSettings:

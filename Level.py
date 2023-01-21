@@ -1,4 +1,3 @@
-
 import pygame.time
 
 import game
@@ -44,10 +43,10 @@ class Level:
                 pos = (self.__keys[index].get_pos()[0], 0)
                 if sign.isnumeric():
                     self.__active_notes.add(LongNote(pos, self.__level_data[2], self.__keys[index],
-                                                     Utils.from_bpm_to_ms(self.__level_data[1]) * 60 / 1000 * self.__level_data[2] *
+                                                     Utils.from_bpm_to_ms(self.__level_data[1]) * 60 / 1000 *
+                                                     self.__level_data[2] *
                                                      int(sign), int(sign)))
                 if sign == NOTE:
-
                     self.__active_notes.add(Note(pos, self.__level_data[2], self.__keys[index]))
 
             self.__line_counter += 1
@@ -57,7 +56,3 @@ class Level:
         for note in self.__active_notes:
             note.move()
             note.render(surface)
-
-
-
-

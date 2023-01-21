@@ -8,6 +8,7 @@ class LevelLoader:
         tile_data = []
         level_speed = 10
         bpm = None
+        artist = "Unknown"
         reading_tiles = False
         if not os.path.exists(f"./assets/levels/{name}/{name}.beatmap"):
             raise Exception(f"Cannot find beatmap '{name}'")
@@ -19,6 +20,8 @@ class LevelLoader:
                     bpm = data[index + 1]
                 if line.startswith("SPEED"):
                     level_speed = data[index + 1]
+                if line.startswith("ARTIST"):
+                    artist = data[index + 1]
                 if line.startswith("TILES"):
                     reading_tiles = True
                 elif reading_tiles:
