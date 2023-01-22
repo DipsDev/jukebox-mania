@@ -1,13 +1,15 @@
 import os
 from pathlib import Path
 
+import game
+from utils import Utils
+
 
 class LevelLoader:
     @staticmethod
     def load_level_beatmap(name):
         tile_data = []
-        level_speed = 10
-        bpm = None
+        bpm = 0
         song_name = "Unknown"
         artist = "Unknown"
         reading_tiles = False
@@ -36,7 +38,9 @@ class LevelLoader:
         if not os.path.exists(music_path):
             raise Exception(f"Cannot find music file for level: '{name}'")
 
-        return tile_data, float(bpm), float(level_speed), music_path, (song_name.strip(), artist.strip())
+        level_speed = (game.GameConstants.KEYS_HEIGHT / Utils.from_bpm_to_ms(int(bpm)) * 60)
+
+        return tile_data, int(bpm), float(level_speed), music_path, (song_name.strip(), artist.strip())
 
     @staticmethod
     def get_available_levels():

@@ -21,12 +21,14 @@ class Level:
     def __init__(self, level_data, keys):
         self.__keys = keys
         self.__line_counter = 0
-        self.__level_started = False
+        self.__music_started = False
         self.__starting_timer = 300
         self.__level_score = 0
         self.__level_data = level_data
+        pygame.mixer.music.load(self.__level_data[3])
         self.__active_notes = pygame.sprite.Group()
-        self.__time_from_last_call = pygame.time.get_ticks() + Utils.from_bpm_to_ms(self.__level_data[1])
+        self.__bpm_milli = Utils.from_bpm_to_ms(level_data[1])
+        self.__time_from_last_call = 0
 
     def start(self):
         game.GameWindow.game_background.blit(background_img, (0, 0))
@@ -36,10 +38,10 @@ class Level:
         game.GameWindow.game_background.blit(song_name, (1440 / 2 - song_name.get_width() / 2, 130))
 
     def start_music(self):
-        if not game.GameConstants.DEBUG_MODE:
-            pygame.mixer.music.load(self.__level_data[3])
+        if not game.GameConstants.DEBUG_MODE and not self.__music_started:
             pygame.mixer.music.set_volume(0.4)
             pygame.mixer.music.play()
+            self.__music_started = True
 
     def add_user_score(self, score: float):
         if score > 0:
@@ -56,9 +58,8 @@ class Level:
             game.GameWindow.screen.blit(r, r.get_rect(center=(1440 / 2, 800 / 2)))
             self.__starting_timer -= 1
             return
-        if not self.__level_started:
-            self.start_music()
-            self.__level_started = True
+
+        self.start_music()
 
         if len(self.__level_data[0]) <= self.__line_counter:
             print("Level finished")
@@ -66,8 +67,12 @@ class Level:
 
         time = pygame.time.get_ticks()
 
+        if not self.__time_from_last_call:
+            self.__time_from_last_call = time + self.__bpm_milli
+
         # Simple notes logic
-        if time >= self.__time_from_last_call:
+        if time > self.__time_from_last_call:
+            self.__time_from_last_call = time + self.__bpm_milli
             for index, sign in enumerate(self.__level_data[0][self.__line_counter]):
                 if sign not in NOTES and not sign.isnumeric():
                     continue
@@ -76,19 +81,18 @@ class Level:
                     self.__active_notes.add(LongNote(pos, self.__level_data[2], self.__keys[index],
                                                      Utils.from_bpm_to_ms(self.__level_data[1]) * 60 / 1000 *
                                                      self.__level_data[2] *
-                                                     int(sign), Utils.from_bpm_to_ms(self.__level_data[1]) * int(sign)))
+                                                     int(sign), self.__bpm_milli * int(sign)))
                 if sign == NOTE:
                     self.__active_notes.add(Note(pos, self.__level_data[2], self.__keys[index]))
 
             self.__line_counter += 1
-            self.__time_from_last_call = time + Utils.from_bpm_to_ms(self.__level_data[1])
 
     def render(self, surface: pygame.Surface):
         level_score = game.main_font.render(f"Score: {self.__level_score}", True, (255, 255, 255))
         surface.blit(level_score, level_score.get_rect(center=(1440 / 2, 100)))
         combo_counter = game.small_font.render(f"X {game.GameWindow.combo_counter}", True, (204, 190, 234))
         surface.blit(combo_counter, combo_counter.get_rect(center=(1440 / 2, 70)))
-        surface.blit(game.keys_background, game.keys_background.get_rect(topleft=(204, 730)))
         for note in self.__active_notes:
             note.move()
             note.render(surface)
+        surface.blit(game.keys_background, game.keys_background.get_rect(topleft=(204, 730)))

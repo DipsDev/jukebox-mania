@@ -27,11 +27,12 @@ class GameWindow:
 
 class GameConstants:
     COMBO_MULTIPLIER = 0.1
-    DEBUG_MODE = False  # Print variables or no
+    DEBUG_MODE = True  # Print variables or no
     GAME_FPS = 60
     KEYS_HEIGHT = 695
     TOLERANCE_OFFSET = 78  # Pixel difference tolerance
     HOLDING_OFFSET = 0.33
+    TARGET_FPS = 60
 
 
 # Game keys
