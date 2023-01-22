@@ -4,6 +4,8 @@ ARTIST
 Pharrel Williams
 NAME
 Get Lucky
+SPEED
+12
 TILES
 x-x-
 -x-x
@@ -223,5 +225,20 @@ x---
 ---x
 x---
 ---x
+----
+--x-
+---x
+-x--
+--x-
+---x
+x---
+-x--
+--x-
+---x
+x---
+-x--
+--x-
+---x
+--x-
 
 

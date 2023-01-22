@@ -27,12 +27,13 @@ class GameWindow:
 
 class GameConstants:
     COMBO_MULTIPLIER = 0.1
-    DEBUG_MODE = True  # Print variables or no
+    DEBUG_MODE = False  # Print variables or no
     GAME_FPS = 60
     KEYS_HEIGHT = 695
     TOLERANCE_OFFSET = 78  # Pixel difference tolerance
     HOLDING_OFFSET = 0.33
     TARGET_FPS = 60
+    KEYS_RECT_HEIGHT = 705.5
 
 
 # Game keys
@@ -44,6 +45,5 @@ keyboard_keys = [f_key, d_key, j_key, k_key]
 
 main_font = pygame.font.Font("./assets/fonts/Peaberry-Doublespace.otf", 32)
 small_font = pygame.font.Font("./assets/fonts/Peaberry-Base.otf", 16)
-
 
 keys_background = pygame.image.load("./assets/keys_background.png")

@@ -3,9 +3,7 @@ import pygame
 import game
 from Scenes.LevelBrowser import LevelBrowser
 from Scenes.PlayScene import PlayScene
-from utils.LevelLoader import LevelLoader
 from game import GameWindow
-from Level import Level
 
 
 def main():

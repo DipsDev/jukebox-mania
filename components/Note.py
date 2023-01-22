@@ -20,6 +20,9 @@ class Note(pygame.sprite.Sprite):
         return self._pos
 
     def move(self):
+        # Movement
+        self._pos = self._pos[0], self._pos[1] + \
+                    (self._tile_speed * game.GameConstants.TARGET_FPS * (game.GameWindow.clock.get_time() / 1000))
         d = Utils.get_distance(self._pos[1], game.GameConstants.KEYS_HEIGHT)
         if (d <= game.GameConstants.TOLERANCE_OFFSET or self._sprite.get_rect().colliderect(
                 self._adjacent_key.get_rect())) and self._adjacent_key.is_clicked():
@@ -27,8 +30,6 @@ class Note(pygame.sprite.Sprite):
             self.hit_sound.play()
             game.GameWindow.level_running.add_user_score(25)
             self.kill()
-        self._pos = self._pos[0], self._pos[1] + \
-                    (self._tile_speed * game.GameConstants.TARGET_FPS * (game.GameWindow.clock.get_time() / 1000))
         if self._pos[1] >= 800 + self._sprite.get_height() + 10:
             game.GameWindow.level_running.add_user_score(-15)
             self.kill()
