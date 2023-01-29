@@ -47,7 +47,6 @@ class KeyboardButton(pygame.sprite.Sprite):
     def get_holding_time(self):
         return self.__holding_time / 60
 
-
     def click_tick(self):
         keys = pygame.key.get_pressed()
         if not keys[self.__key_constant]:
