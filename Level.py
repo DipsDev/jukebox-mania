@@ -36,7 +36,10 @@ class Level:
         game.GameWindow.game_background.blit(background_img, (0, 0))
         game.GameWindow.level_running = self
         game.GameWindow.combo_counter = 0
-        song_name = game.main_font.render(f"Currently Playing: {self.__level_data[-1][0]}", True, (229, 161, 89))
+        song_name = game.main_font.render(
+            f"Currently Playing: {self.__level_data[-1][0].title()}",
+            True,
+            (229, 161, 89))
         game.GameWindow.game_background.blit(song_name, (1440 / 2 - song_name.get_width() / 2, 130))
 
     def start_music(self):

@@ -20,13 +20,14 @@ def main():
 
         GameWindow.screen.blit(game.GameWindow.game_background, (0, 0))
         if game.GameWindow.game_state == game.GameStates.LEVEL_BROWSER:
+            LevelBrowser().load()
             LevelBrowser().render(game.GameWindow.screen)
         elif game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
             if not level_loaded:
                 level_loaded = PlayScene(game.GameWindow.level_running)
             else:
                 level_loaded.play(game.GameWindow.screen)
-        pygame.display.flip()
+        pygame.display.update()
         GameWindow.clock.tick(game.GameConstants.GAME_FPS)
 
 

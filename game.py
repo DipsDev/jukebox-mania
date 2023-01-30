@@ -12,19 +12,6 @@ class GameStates(str, Enum):
     MAIN_MENU = "main_menu"
 
 
-class GameWindow:
-    pygame.init()
-    pygame.mixer.init()
-    pygame.font.init()
-    screen = pygame.display.set_mode((1440, 800))
-    clock = pygame.time.Clock()
-    pygame.display.set_caption('Jukebox Mania')
-    game_state = GameStates.LEVEL_BROWSER
-    level_running: Level = None
-    game_background: pygame.Surface = None
-    combo_counter = 0
-
-
 class GameConstants:
     COMBO_MULTIPLIER = 0.1
     DEBUG_MODE = False  # Print variables or no
@@ -34,6 +21,20 @@ class GameConstants:
     HOLDING_OFFSET = 0.33
     TARGET_FPS = 60
     KEYS_RECT_HEIGHT = 705.5
+    DIMENSIONS = (1440, 800)
+
+
+class GameWindow:
+    pygame.init()
+    pygame.mixer.init()
+    pygame.font.init()
+    screen = pygame.display.set_mode((GameConstants.DIMENSIONS[0], GameConstants.DIMENSIONS[1]))
+    clock = pygame.time.Clock()
+    pygame.display.set_caption('Jukebox Mania')
+    game_state = GameStates.LEVEL_BROWSER
+    level_running: Level = None
+    game_background: pygame.Surface = None
+    combo_counter = 0
 
 
 # Game keys

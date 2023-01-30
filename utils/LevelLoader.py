@@ -43,5 +43,21 @@ class LevelLoader:
         levels = []
         for child in Path("./assets/levels").iterdir():
             if child.is_dir():
-                levels.append(child.name.replace("_", " "))
+                levels.append((child.name.replace("_", " "), LevelLoader.get_level_artist(child.__str__())))
         return levels
+
+    @staticmethod
+    def is_valid_level(dir_path: str):
+        return not os.path.exists(dir_path) or len([name for name in os.listdir(dir_path) if os.path.isfile(name)]) != 2
+
+    @staticmethod
+    def get_level_artist(dir_path):
+        level_name = dir_path.split("\\")[-1]
+        artist = "Unknown"
+        with open(f"./assets/levels/{level_name}/{level_name}.beatmap", 'r') as music_file:
+            music_data = music_file.readlines()
+            for index, line in enumerate(music_data):
+                if line.startswith("ARTIST"):
+                    artist = music_data[index + 1]
+            return artist
+
