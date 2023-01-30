@@ -1,8 +1,7 @@
 import pygame.transform
 
 import game
-from components.Note import Note
-from utils import Utils
+from components.note import Note
 
 
 class LongNote(Note):
@@ -15,13 +14,13 @@ class LongNote(Note):
         self.__active = True
         self.__total_rect = None
         self.__middle_long_tile = pygame.image. \
-            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_mid.png")\
+            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_mid.png") \
             .convert_alpha()
         self.__top_long_tile = pygame.image. \
-            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_top.png")\
+            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_top.png") \
             .convert_alpha()
         self.__bot_long_tile = pygame.image. \
-            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_bot.png")\
+            load(f"./assets/notes/long_notes/{adjacent_key.get_color()}_tile/{adjacent_key.get_color()}_tile_bot.png") \
             .convert_alpha()
         self.resize()
 

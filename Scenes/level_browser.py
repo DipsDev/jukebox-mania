@@ -1,9 +1,8 @@
 import pygame
 
 import game
-from Level import Level
-from components import MusicTicket
-from utils.LevelLoader import LevelLoader
+from components import music_ticket
+from utils.level_loader import LevelLoader
 
 
 class LevelBrowser:
@@ -15,6 +14,7 @@ class LevelBrowser:
     def load(self):
         if self.__loaded:
             return
+
         # Background importing --------------------------
         background_img = pygame.image.load("./assets/level_browser_bg.png").convert()
         background_img = pygame.transform.scale(background_img, game.GameConstants.DIMENSIONS)
@@ -26,9 +26,10 @@ class LevelBrowser:
         # Blit to the screen --------------------------
         game.GameWindow.game_background.blit(background_img, (0, 0))
         game.GameWindow.combo_counter = 0
+        return self
 
     def render(self, surface: pygame.Surface):
 
         pos = (game.GameConstants.DIMENSIONS[0] / 2, 100)
         for index, level_name in enumerate(self.__av_levels):
-            MusicTicket.render(surface, level_name, pos, index)
+            music_ticket.render(surface, level_name, pos, index)

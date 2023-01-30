@@ -2,8 +2,9 @@ from enum import Enum
 
 import pygame
 
-from Level import Level
-from components.KeyboardButton import KeyboardButton
+from database.database import Database
+from level import Level
+from components.keyboard_button import KeyboardButton
 
 
 class GameStates(str, Enum):
@@ -35,6 +36,7 @@ class GameWindow:
     level_running: Level = None
     game_background: pygame.Surface = None
     combo_counter = 0
+    database = Database().load()
 
 
 # Game keys

@@ -1,7 +1,7 @@
 import pygame.sprite
 
 import game
-from components.KeyboardButton import KeyboardButton
+from components.keyboard_button import KeyboardButton
 from utils import Utils
 
 track1_move_next_time = 0

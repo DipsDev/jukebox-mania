@@ -1,8 +1,8 @@
 import pygame
 
 import game
-from Level import Level
-from utils.LevelLoader import LevelLoader
+from level import Level
+from utils.level_loader import LevelLoader
 
 
 def render(surface: pygame.Surface, level_data: tuple, pos: tuple, index: int):

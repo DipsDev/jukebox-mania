@@ -42,17 +42,20 @@ class LevelLoader:
     def get_available_levels():
         levels = []
         for child in Path("./assets/levels").iterdir():
-            if child.is_dir():
-                levels.append((child.name.replace("_", " "), LevelLoader.get_level_artist(child.__str__())))
+            if child.is_dir() and LevelLoader.is_valid_level(child.name):
+                levels.append((child.name.replace("_", " "), LevelLoader.get_level_artist(child.name)))
+            elif not LevelLoader.is_valid_level(child.name):
+                print(f"Invalid level: '{child.name}', Ignoring...")
         return levels
 
     @staticmethod
-    def is_valid_level(dir_path: str):
-        return not os.path.exists(dir_path) or len([name for name in os.listdir(dir_path) if os.path.isfile(name)]) != 2
+    def is_valid_level(level_name: str):
+        dir_path = f"./assets/levels/{level_name}"
+        flag = os.path.exists(dir_path) and len(os.listdir(dir_path)) == 2
+        return flag
 
     @staticmethod
-    def get_level_artist(dir_path):
-        level_name = dir_path.split("\\")[-1]
+    def get_level_artist(level_name):
         artist = "Unknown"
         with open(f"./assets/levels/{level_name}/{level_name}.beatmap", 'r') as music_file:
             music_data = music_file.readlines()

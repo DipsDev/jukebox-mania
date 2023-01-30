@@ -2,8 +2,8 @@ import pygame.time
 
 import game
 from assets.assets_loading import background_img
-from components.LongNote import LongNote
-from components.Note import Note
+from components.long_note import LongNote
+from components.note import Note
 from utils import Utils
 
 NOTE = "x"
@@ -83,6 +83,9 @@ class Level:
 
         if len(self.__level_data[0]) <= self.__line_counter:
             print("Level finished")
+            game.GameWindow.database.set_data("best_score", {self.__level_data[-1][0]: self.__level_score})
+            game.GameWindow.level_running = None
+            game.GameWindow.game_state = game.GameStates.LEVEL_BROWSER
             return
         if self.__song_progression > self.__time_from_last_call_ms:
             self.generate_new_notes()

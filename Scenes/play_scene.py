@@ -1,8 +1,6 @@
-import pygame
 
 import game
-from Level import Level
-from assets.assets_loading import background_img
+from level import Level
 
 
 class PlayScene:
