@@ -2,6 +2,7 @@ import pygame
 
 import game
 from scenes.level_browser import LevelBrowser
+from scenes.main_menu import MainMenu
 from scenes.play_scene import PlayScene
 from game import GameWindow
 
@@ -11,6 +12,7 @@ def main():
     game.GameWindow.game_background = pygame.Surface(GameWindow.screen.get_size()).convert()
     game.GameWindow.game_background.fill((255, 255, 255))
 
+    # Screens
     level_loaded = None
     level_browser = None
 
@@ -28,6 +30,8 @@ def main():
             else:
                 level_browser.render(game.GameWindow.screen)
                 level_loaded = None
+        elif game.GameWindow.game_state == game.GameStates.MAIN_MENU:
+            MainMenu().render(game.GameWindow.screen)
         elif game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
             if not level_loaded:
                 level_loaded = PlayScene(game.GameWindow.level_running)

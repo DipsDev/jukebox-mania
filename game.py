@@ -23,6 +23,7 @@ class GameConstants:
     TARGET_FPS = 60
     KEYS_RECT_HEIGHT = 705.5
     DIMENSIONS = (1440, 800)
+    CENTER = (DIMENSIONS[0] / 2, DIMENSIONS[1] / 2)
 
 
 class GameWindow:
@@ -32,7 +33,7 @@ class GameWindow:
     screen = pygame.display.set_mode((GameConstants.DIMENSIONS[0], GameConstants.DIMENSIONS[1]))
     clock = pygame.time.Clock()
     pygame.display.set_caption('Jukebox Mania')
-    game_state = GameStates.LEVEL_BROWSER
+    game_state = GameStates.MAIN_MENU
     level_running: Level = None
     game_background: pygame.Surface = None
     combo_counter = 0
@@ -46,7 +47,7 @@ j_key = KeyboardButton("J", (615 + 220 - 4, GameConstants.KEYS_HEIGHT), pygame.K
 k_key = KeyboardButton("K", (615 + 220 * 2 + 9, GameConstants.KEYS_HEIGHT), pygame.K_k, "pink")
 keyboard_keys = [f_key, d_key, j_key, k_key]
 
-main_font = pygame.font.Font("./assets/fonts/Peaberry-Doublespace.otf", 32)
-small_font = pygame.font.Font("./assets/fonts/Peaberry-Base.otf", 16)
+main_font = pygame.font.Font("./assets/fonts/m6x11.ttf", 32)
+small_font = pygame.font.Font("./assets/fonts/m5x7.ttf", 16)
 
 keys_background = pygame.image.load("./assets/keys_background.png")
