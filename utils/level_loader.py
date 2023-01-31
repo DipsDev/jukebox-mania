@@ -1,5 +1,8 @@
+
 import os
 from pathlib import Path
+
+from utils.types import LevelData, Song
 
 
 class LevelLoader:
@@ -36,7 +39,7 @@ class LevelLoader:
         if not os.path.exists(music_path):
             raise Exception(f"Cannot find music file for level: '{name}'")
 
-        return tile_data, int(bpm), float(level_speed), music_path, (song_name.strip(), artist.strip())
+        return LevelData(tile_data, int(bpm), float(level_speed), music_path, Song(song_name.strip(), artist.strip()))
 
     @staticmethod
     def get_available_levels():

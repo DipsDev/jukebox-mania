@@ -8,7 +8,7 @@ track1_move_next_time = 0
 
 
 class Note(pygame.sprite.Sprite):
-    def __init__(self, pos: tuple, tile_speed: int, adjacent_key: KeyboardButton):
+    def __init__(self, pos: tuple, tile_speed: float, adjacent_key: KeyboardButton):
         super().__init__()
         self._adjacent_key = adjacent_key
         self._pos = pos

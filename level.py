@@ -5,6 +5,7 @@ from assets.assets_loading import background_img
 from components.long_note import LongNote
 from components.note import Note
 from utils import Utils
+from utils.types import LevelData
 
 NOTE = "x"
 NOTES = [NOTE]
@@ -18,18 +19,17 @@ NOTES = [NOTE]
 
 class Level:
 
-    def __init__(self, level_data, keys):
+    def __init__(self, level_data: LevelData, keys):
         self.__keys = keys
         self.__line_counter = 0
         self.__music_started = False
         self.__starting_timer = 300
         self.__level_score = 0
         self.__level_data = level_data
-        pygame.mixer.music.load(self.__level_data[3])
+        pygame.mixer.music.load(self.__level_data.music_path)
         self.__active_notes = pygame.sprite.Group()
-        self.__bpm_in_ms = Utils.from_bpm_to_ms(level_data[1])
+        self.__bpm_in_ms = Utils.from_bpm_to_ms(level_data.song_bpm)
         self.__song_progression = 0
-        self.__time_falling_ms = (game.GameConstants.KEYS_RECT_HEIGHT / self.__level_data[2])
         self.__time_from_last_call_ms = self.__bpm_in_ms
 
     def start(self):
@@ -37,7 +37,7 @@ class Level:
         game.GameWindow.level_running = self
         game.GameWindow.combo_counter = 0
         song_name = game.main_font.render(
-            f"Currently Playing: {self.__level_data[-1][0].title()}",
+            f"Currently Playing: {self.__level_data.song_data.song_name.title()}",
             True,
             (229, 161, 89))
         game.GameWindow.game_background.blit(song_name, (1440 / 2 - song_name.get_width() / 2, 130))
@@ -59,17 +59,17 @@ class Level:
         self.__level_score = max(self.__level_score, 0)
 
     def generate_new_notes(self):
-        for index, sign in enumerate(self.__level_data[0][self.__line_counter]):
+        for index, sign in enumerate(self.__level_data.tile_data[self.__line_counter]):
             if sign not in NOTES and not sign.isnumeric():
                 continue
             pos = (self.__keys[index].get_pos()[0], 0)
             if sign.isnumeric():
-                self.__active_notes.add(LongNote(pos, self.__level_data[2], self.__keys[index],
-                                                 Utils.from_bpm_to_ms(self.__level_data[1]) * 60 / 1000 *
-                                                 self.__level_data[2] *
+                self.__active_notes.add(LongNote(pos, self.__level_data.level_speed, self.__keys[index],
+                                                 Utils.from_bpm_to_ms(self.__level_data.song_bpm) * 60 / 1000 *
+                                                 self.__level_data.level_speed *
                                                  int(sign), self.__bpm_in_ms * int(sign)))
             if sign == NOTE:
-                self.__active_notes.add(Note(pos, self.__level_data[2], self.__keys[index]))
+                self.__active_notes.add(Note(pos, self.__level_data.level_speed, self.__keys[index]))
         self.__line_counter += 1
 
     def tick(self):
@@ -81,13 +81,15 @@ class Level:
 
         self.start_music()
 
-        if len(self.__level_data[0]) <= self.__line_counter:
+        if self.__starting_timer <= 0 and len(self.__active_notes) == 0 and\
+                len(self.__level_data.tile_data) <= self.__line_counter:
             print("Level finished")
-            game.GameWindow.database.set_data("best_score", {self.__level_data[-1][0]: self.__level_score})
+            game.GameWindow.database.set_data("best_score", {self.__level_data.song_data.song_name: self.__level_score})
             game.GameWindow.level_running = None
             game.GameWindow.game_state = game.GameStates.LEVEL_BROWSER
             return
-        if self.__song_progression > self.__time_from_last_call_ms:
+        if self.__song_progression > self.__time_from_last_call_ms\
+                and len(self.__level_data.tile_data) > self.__line_counter:
             self.generate_new_notes()
             self.__time_from_last_call_ms += self.__bpm_in_ms
         self.__song_progression += game.GameWindow.clock.get_time()

@@ -27,6 +27,7 @@ def main():
                 level_browser = LevelBrowser().load()
             else:
                 level_browser.render(game.GameWindow.screen)
+                level_loaded = None
         elif game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
             if not level_loaded:
                 level_loaded = PlayScene(game.GameWindow.level_running)
