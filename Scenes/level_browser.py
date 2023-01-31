@@ -10,6 +10,7 @@ class LevelBrowser:
         self.__av_levels = LevelLoader().get_available_levels()
         game.GameWindow.level_running = None
         self.__loaded = False
+        pygame.mixer.music.stop()
 
     def load(self):
         if self.__loaded:

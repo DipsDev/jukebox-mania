@@ -11,14 +11,7 @@ NOTE = "x"
 NOTES = [NOTE]
 
 
-# Equation to bpm from interval and speed
-# 60 / (interval / speed)
-
-# ms = (4 + 1/3) * BPM
-
-
 class Level:
-
     def __init__(self, level_data: LevelData, keys):
         self.__keys = keys
         self.__line_counter = 0
@@ -81,14 +74,14 @@ class Level:
 
         self.start_music()
 
-        if self.__starting_timer <= 0 and len(self.__active_notes) == 0 and\
+        if self.__starting_timer <= 0 and len(self.__active_notes) == 0 and \
                 len(self.__level_data.tile_data) <= self.__line_counter:
             print("Level finished")
             game.GameWindow.database.set_data("best_score", {self.__level_data.song_data.song_name: self.__level_score})
             game.GameWindow.level_running = None
             game.GameWindow.game_state = game.GameStates.LEVEL_BROWSER
             return
-        if self.__song_progression > self.__time_from_last_call_ms\
+        if self.__song_progression > self.__time_from_last_call_ms \
                 and len(self.__level_data.tile_data) > self.__line_counter:
             self.generate_new_notes()
             self.__time_from_last_call_ms += self.__bpm_in_ms

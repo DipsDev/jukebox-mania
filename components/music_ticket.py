@@ -31,6 +31,7 @@ def render(surface: pygame.Surface, level_data: tuple, pos: tuple, index: int):
     # Only hover ------------------
     elif song_box.get_rect(center=(pos[0], pos[1] + GAP * (index + 1))).collidepoint(mouse.get_pos()):
         song_title_font = game.main_font.render(song_name, True, (212, 212, 212))
+        song_box.fill((48, 33, 33))
 
     # Blit ------------------
     surface.blit(song_box, song_box.get_rect(center=(pos[0], pos[1] + GAP * (index + 1))))

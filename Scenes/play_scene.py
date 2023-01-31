@@ -1,4 +1,3 @@
-
 import game
 from level import Level
 
