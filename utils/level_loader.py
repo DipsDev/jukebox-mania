@@ -8,6 +8,7 @@ from utils.types import LevelData, Song
 class LevelLoader:
     @staticmethod
     def load_level_beatmap(name):
+        name = name.replace('"', "")
         tile_data = []
         bpm = 0
         song_name = "Unknown"

@@ -29,7 +29,7 @@ class Level:
         game.GameWindow.game_background.blit(background_img, (0, 0))
         game.GameWindow.level_running = self
         game.GameWindow.combo_counter = 0
-        song_name = game.main_font.render(
+        song_name = game.medium_font.render(
             f"Currently Playing: {self.__level_data.song_data.song_name.title()}",
             True,
             (229, 161, 89))
@@ -67,7 +67,7 @@ class Level:
 
     def tick(self):
         if self.__starting_timer >= 0:
-            r = game.main_font.render(f"Starting in {self.__starting_timer // 100 + 1}", True, (255, 255, 255))
+            r = game.medium_font.render(f"Starting in {self.__starting_timer // 100 + 1}", True, (255, 255, 255))
             game.GameWindow.screen.blit(r, r.get_rect(center=(1440 / 2, 800 / 2)))
             self.__starting_timer -= 1
             return
@@ -77,7 +77,7 @@ class Level:
         if self.__starting_timer <= 0 and len(self.__active_notes) == 0 and \
                 len(self.__level_data.tile_data) <= self.__line_counter:
             print("Level finished")
-            game.GameWindow.database.set_data("best_score", {self.__level_data.song_data.song_name: self.__level_score})
+            game.GameWindow.database.set_data("high_score", {Utils.encode_string(self.__level_data.song_data.song_name): self.__level_score})
             game.GameWindow.level_running = None
             game.GameWindow.game_state = game.GameStates.LEVEL_BROWSER
             return
@@ -88,7 +88,7 @@ class Level:
         self.__song_progression += game.GameWindow.clock.get_time()
 
     def render(self, surface: pygame.Surface):
-        level_score = game.main_font.render(f"Score: {self.__level_score}", True, (255, 255, 255))
+        level_score = game.medium_font.render(f"Score: {self.__level_score}", True, (255, 255, 255))
         surface.blit(level_score, level_score.get_rect(center=(1440 / 2, 100)))
         combo_counter = game.small_font.render(f"X {game.GameWindow.combo_counter}", True, (204, 190, 234))
         surface.blit(combo_counter, combo_counter.get_rect(center=(1440 / 2, 70)))
