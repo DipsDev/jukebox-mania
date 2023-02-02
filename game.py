@@ -6,11 +6,15 @@ from database.database import Database
 from level import Level
 from components.keyboard_button import KeyboardButton
 
+pygame.init()
+
 
 class GameStates(str, Enum):
     PLAYING_LEVEL = "playing_lvl"
     LEVEL_BROWSER = "browsing_levels"
     MAIN_MENU = "main_menu"
+    SETTINGS = "settings"
+    TUTORIAL = 'tutorial_lvl'
 
 
 class GameConstants:
@@ -27,9 +31,6 @@ class GameConstants:
 
 
 class GameWindow:
-    pygame.init()
-    pygame.mixer.init()
-    pygame.font.init()
     screen = pygame.display.set_mode((GameConstants.DIMENSIONS[0], GameConstants.DIMENSIONS[1]))
     clock = pygame.time.Clock()
     pygame.display.set_caption('Jukebox Mania')
@@ -47,8 +48,5 @@ j_key = KeyboardButton("J", (615 + 220 - 4, GameConstants.KEYS_HEIGHT), pygame.K
 k_key = KeyboardButton("K", (615 + 220 * 2 + 9, GameConstants.KEYS_HEIGHT), pygame.K_k, "pink")
 keyboard_keys = [f_key, d_key, j_key, k_key]
 
-main_font = pygame.font.Font("./assets/fonts/Silver.ttf", 50)
-medium_font = pygame.font.Font("./assets/fonts/m5x7.ttf", 40)
-small_font = pygame.font.Font("./assets/fonts/m5x7.ttf", 30)
-
-keys_background = pygame.image.load("./assets/keys_background.png")
+# Sound related
+music_volume = GameWindow.database.get_data("music_volume")

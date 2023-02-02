@@ -5,7 +5,7 @@ from components.note import Note
 
 
 class LongNote(Note):
-    def __init__(self, pos, tile_speed, adjacent_key, height: int, holding_ms: int):
+    def __init__(self, pos, tile_speed, adjacent_key, height: float, holding_ms: float):
         super().__init__(pos, tile_speed, adjacent_key)
         self._height = height
         self._original_height = height
@@ -52,12 +52,13 @@ class LongNote(Note):
             self._holding_time_counter += 1
 
         if self.__active and self._holding_time_counter / game.GameConstants.GAME_FPS >= self._holding_ms / 1000:
-            game.GameWindow.level_running.add_user_score(
-                round(1.3 * min(self._holding_time_counter, (self._holding_ms // 100))))
+            if game.GameStates.PLAYING_LEVEL == game.GameWindow.game_state:
+                game.GameWindow.level_running.add_user_score(
+                    round(1.3 * min(self._holding_time_counter, (self._holding_ms // 100))))
             self.__active = False
 
         if tail[1] >= 1.3 * round(self._height + self._original_height):
-            if self.__active:
+            if self.__active and game.GameStates.PLAYING_LEVEL == game.GameWindow.game_state:
                 game.GameWindow.level_running.add_user_score(self._holding_time_counter // 10)
             self.kill()
 

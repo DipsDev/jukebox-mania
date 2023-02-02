@@ -26,9 +26,18 @@ class Database:
     def get_data(self, tag):
         return self.__data[tag]
 
-    def set_data(self, tag: str, new_data: dict):
+    def set_data_dict(self, tag: str, new_data: dict):
         new_list = []
         for item in self.__data[tag]:
             if list(new_data.keys())[0] != list(item.keys())[0]:
                 new_list.append(item)
         self.__data[tag] = [*new_list, new_data]
+
+    def set_data_primitive(self, tag: str, new_data):
+        self.__data[tag] = new_data
+
+    def set_data(self, tag: str, new_data):
+        if type(new_data) == dict:
+            return self.set_data_dict(tag, new_data)
+        else:
+            return self.set_data_primitive(tag, new_data)

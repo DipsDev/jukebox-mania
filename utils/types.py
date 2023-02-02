@@ -14,3 +14,4 @@ class LevelData:
     level_speed: float
     music_path: str
     song_data: Song
+    difficulty: str = "easy"

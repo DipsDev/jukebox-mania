@@ -2,6 +2,7 @@ import pygame.sprite
 
 import game
 from components.keyboard_button import KeyboardButton
+from assets import asset_loader
 from utils import Utils
 
 track1_move_next_time = 0
@@ -12,7 +13,6 @@ class Note(pygame.sprite.Sprite):
         super().__init__()
         self._adjacent_key = adjacent_key
         self._pos = pos
-        self.hit_sound = pygame.mixer.Sound('./assets/sounds/hitsound.wav')
         self._tile_speed = tile_speed
         self._sprite = pygame.image.load(f"./assets/notes/{adjacent_key.get_color()}_tile.png").convert_alpha()
 
@@ -26,12 +26,14 @@ class Note(pygame.sprite.Sprite):
         d = Utils.get_distance(self._pos[1], game.GameConstants.KEYS_HEIGHT)
         if (d <= game.GameConstants.TOLERANCE_OFFSET or self._sprite.get_rect().colliderect(
                 self._adjacent_key.get_rect())) and self._adjacent_key.is_clicked():
-            self.hit_sound.set_volume(0.02)
-            self.hit_sound.play()
-            game.GameWindow.level_running.add_user_score(25)
+            asset_loader.HIT_SOUND.set_volume(0.02)
+            asset_loader.HIT_SOUND.play()
+            if game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
+                game.GameWindow.level_running.add_user_score(25)
             self.kill()
         if self._pos[1] >= 800 + self._sprite.get_height() + 10:
-            game.GameWindow.level_running.add_user_score(-15)
+            if game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
+                game.GameWindow.level_running.add_user_score(-15)
             self.kill()
 
     def render(self, surface: pygame.Surface):
