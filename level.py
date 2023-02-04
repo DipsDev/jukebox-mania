@@ -26,8 +26,10 @@ class Level:
         self.__song_progression = 0
         self.__time_from_last_call_ms = self.__bpm_in_ms
 
+        self.__keys_bg = asset_loader.keys_background.convert()
+
     def start(self):
-        game.GameWindow.game_background.blit(asset_loader.background_img, (0, 0))
+        game.GameWindow.game_background.blit(asset_loader.background_img.convert(), (0, 0))
         game.GameWindow.level_running = self
         game.GameWindow.combo_counter = 0
         song_name = asset_loader.medium_font.render(
@@ -100,4 +102,4 @@ class Level:
             note.render(surface)
             note.move()
 
-        surface.blit(asset_loader.keys_background, asset_loader.keys_background.get_rect(topleft=(204, 730)))
+        surface.blit(self.__keys_bg, self.__keys_bg.get_rect(topleft=(204, 730)))

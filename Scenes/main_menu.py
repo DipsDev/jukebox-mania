@@ -2,6 +2,7 @@ import pygame
 
 import game
 from assets import asset_loader
+from assets.asset_loader import CLICK_SOUND
 
 
 class MainMenu:
@@ -14,6 +15,7 @@ class MainMenu:
         for name, rect in self.__rects:
             if rect.collidepoint(
                     mouse.get_pos()):
+                CLICK_SOUND.play()
                 if name == 'song browser':
                     game.GameWindow.game_state = game.GameStates.LEVEL_BROWSER
                 elif name == "settings":

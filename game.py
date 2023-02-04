@@ -31,7 +31,7 @@ class GameConstants:
 
 
 class GameWindow:
-    screen = pygame.display.set_mode((GameConstants.DIMENSIONS[0], GameConstants.DIMENSIONS[1]))
+    screen = pygame.display.set_mode((1440, 800))
     clock = pygame.time.Clock()
     pygame.display.set_caption('Jukebox Mania')
     game_state = GameStates.MAIN_MENU
