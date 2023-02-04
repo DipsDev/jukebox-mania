@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 
 import game
@@ -26,7 +28,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.GameWindow.database.save()
-                return
+                sys.exit(1)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if game_state == game.GameStates.MAIN_MENU:
                     MainMenu().render(game.GameWindow.screen).button_tick()
