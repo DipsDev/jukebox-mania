@@ -26,7 +26,7 @@ class Note(pygame.sprite.Sprite):
         d = Utils.get_distance(self._pos[1], game.GameConstants.KEYS_HEIGHT)
         if (d <= game.GameConstants.TOLERANCE_OFFSET or self._sprite.get_rect().colliderect(
                 self._adjacent_key.get_rect())) and self._adjacent_key.is_clicked():
-            asset_loader.HIT_SOUND.set_volume(0.02)
+            asset_loader.HIT_SOUND.set_volume(game.fx_volume / 100)
             asset_loader.HIT_SOUND.play()
             if game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
                 game.GameWindow.level_running.add_user_score(25)

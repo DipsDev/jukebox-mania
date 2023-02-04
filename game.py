@@ -48,5 +48,6 @@ j_key = KeyboardButton("J", (615 + 220 - 4, GameConstants.KEYS_HEIGHT), pygame.K
 k_key = KeyboardButton("K", (615 + 220 * 2 + 9, GameConstants.KEYS_HEIGHT), pygame.K_k, "pink")
 keyboard_keys = [f_key, d_key, j_key, k_key]
 
-# Sound related
+# Sound Related
 music_volume = GameWindow.database.get_data("music_volume")
+fx_volume = GameWindow.database.get_data("fx_volume")
