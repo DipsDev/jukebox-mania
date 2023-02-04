@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 
 import game
@@ -25,6 +27,7 @@ class MainMenu:
                 elif name == "quit":
                     game.GameWindow.database.save()
                     pygame.quit()
+                    sys.exit(1)
 
     def render(self, surface: pygame.Surface):
         bg = pygame.Surface((1440, 800))
@@ -33,7 +36,7 @@ class MainMenu:
 
         # Variables
         main_title = asset_loader.main_font.render("Jukebox Mania", True, (0, 0, 0))
-        copyright_text = asset_loader.small_font.render('A Game By Ido Geva', True, (0, 0, 0))
+        copyright_text = asset_loader.small_font.render('By Ido Geva', True, (0, 0, 0))
 
         # Buttons
         song_browser = asset_loader.medium_font.render("Song Browser", True, (0, 0, 0))
