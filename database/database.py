@@ -1,5 +1,7 @@
 import json
 
+import game
+
 
 class Database:
     def __init__(self):
@@ -16,6 +18,8 @@ class Database:
         return self
 
     def save(self):
+        game.GameWindow.database.set_data("fx_volume", game.fx_volume)
+        game.GameWindow.database.set_data("music_volume", game.music_volume)
         if not self.__is_loaded:
             return
         with open("./database/db.json", 'w') as f:

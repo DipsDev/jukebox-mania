@@ -13,42 +13,44 @@ class Settings:
         for name, rect in self.__buttons:
             if rect.collidepoint(
                     mouse.get_pos()):
+                print(game.music_volume)
                 if name == 'volume_up_music':
                     game.music_volume = min(game.music_volume + 10, 100)
-                    game.GameWindow.database.set_data("music_volume", game.music_volume)
                 elif name == "volume_down_music":
                     game.music_volume = max(game.music_volume - 10, 0)
-                    game.GameWindow.database.set_data("music_volume", game.music_volume)
                 elif name == "back":
                     game.GameWindow.game_state = game.GameStates.MAIN_MENU
                 elif name == "volume_down_fx":
+
                     game.fx_volume = max(game.fx_volume - 10, 0)
-                    game.GameWindow.database.set_data("fx_volume", game.fx_volume)
                 elif name == "volume_up_fx":
                     game.fx_volume = min(game.fx_volume + 10, 100)
-                    game.GameWindow.database.set_data("fx_volume", game.fx_volume)
 
     def render(self, surface: pygame.Surface):
+        text_color = (255, 255, 255)
+
         # Main titles
-        settings_title = asset_loader.main_font.render("Settings", True, (0, 0, 0))
-        copyright = asset_loader.small_font.render('A Game By Ido Geva', True, (0, 0, 0))
+        settings_title = asset_loader.main_font.render("Settings", True, text_color)
+        copyright = asset_loader.small_font.render('A Game By Ido Geva', True, text_color)
 
         # Labels
-        volume_font = asset_loader.medium_font.render("Music Volume", True, (0, 0, 0))
+        volume_font = asset_loader.medium_font.render("Music Volume", True, text_color)
         volume_progress_num = game.music_volume * 10 * (volume_font.get_width() / 1000)
         volume_progress = pygame.Surface((volume_progress_num, 15))
+        volume_progress.fill(text_color)
 
-        fx_font = asset_loader.medium_font.render("FX Volume", True, (0, 0, 0))
+        fx_font = asset_loader.medium_font.render("FX Volume", True, text_color)
         fx_progress_num = game.fx_volume * 10 * (volume_font.get_width()) / 1000
         fx_progress = pygame.Surface((fx_progress_num, 15))
+        fx_progress.fill(text_color)
 
         # Buttons
-        volume_up = asset_loader.small_font.render("Volume Up", True, (0, 0, 0))
-        volume_down = asset_loader.small_font.render("Volume Down", True, (0, 0, 0))
-        back_button = asset_loader.small_font.render("Back", True, (0, 0, 0))
+        volume_up = asset_loader.small_font.render("Volume Up", True, text_color)
+        volume_down = asset_loader.small_font.render("Volume Down", True, text_color)
+        back_button = asset_loader.small_font.render("Back", True, text_color)
 
-        fx_up = asset_loader.small_font.render("Volume Up", True, (0, 0, 0))
-        fx_down = asset_loader.small_font.render("Volume Down", True, (0, 0, 0))
+        fx_up = asset_loader.small_font.render("Volume Up", True, text_color)
+        fx_down = asset_loader.small_font.render("Volume Down", True, text_color)
 
         self.__buttons.append(
             ("volume_up_music", volume_up.get_rect(center=(game.GameConstants.CENTER[0] + 170, 200 - 12))))

@@ -19,7 +19,7 @@ class MusicTicket:
         if self.__padding_rect.collidepoint(
                 mouse.get_pos()):
             level_data = LevelLoader().load_level_beatmap(self.__song_id.replace(" ", "_").lower())
-            level = Level(level_data, game.keyboard_keys)
+            level = Level(level_data, game.KEYBOARD_KEYS)
             game.GameWindow.level_running = level
             game.GameWindow.game_state = game.GameStates.PLAYING_LEVEL
 

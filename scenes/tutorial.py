@@ -43,7 +43,7 @@ class GameTutorial:
                 (255, 255, 255)
             )
             surface.blit(press_keys, press_keys.get_rect(center=game.GameConstants.CENTER))
-            for keyboard_key in game.keyboard_keys:
+            for keyboard_key in game.KEYBOARD_KEYS:
                 if keyboard_key.is_clicked() and keyboard_key not in self.__clicked_keys:
                     self.__clicked_keys.append(keyboard_key)
             if len(self.__clicked_keys) == 4:
@@ -101,7 +101,7 @@ class GameTutorial:
             note.render(surface)
             note.move()
 
-        for keyboard_key in game.keyboard_keys:
+        for keyboard_key in game.KEYBOARD_KEYS:
             keyboard_key.click_tick()
             keyboard_key.render(surface)
 

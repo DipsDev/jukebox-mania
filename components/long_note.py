@@ -51,13 +51,15 @@ class LongNote(Note):
         if is_colliding and (self._adjacent_key.is_held()):
             self._holding_time_counter += 1
 
+        # Note caught
         if self.__active and self._holding_time_counter / game.GameConstants.GAME_FPS >= self._holding_ms / 1000:
             if game.GameStates.PLAYING_LEVEL == game.GameWindow.game_state:
                 game.GameWindow.level_running.add_user_score(
-                    round(1.3 * min(self._holding_time_counter, (self._holding_ms // 100))))
+                    round(1.3 * min(self._holding_time_counter, int(self._holding_ms // 100))))
             self.__active = False
 
-        if tail[1] >= 1.3 * round(self._height + self._original_height):
+        # Note exits the screen
+        if tail[1] >= 1.1 * round(self._height + self._original_height):
             if self.__active and game.GameStates.PLAYING_LEVEL == game.GameWindow.game_state:
                 game.GameWindow.level_running.add_user_score(self._holding_time_counter // 10)
             self.kill()

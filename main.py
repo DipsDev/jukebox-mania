@@ -3,6 +3,7 @@ import sys
 import pygame
 
 import game
+from components.animated_bg import AnimatedBg
 from scenes.level_browser import LevelBrowser
 from scenes.main_menu import MainMenu
 from scenes.play_scene import PlayScene
@@ -21,7 +22,7 @@ def main():
     tutorial_loaded = None
     level_browser = None
     main_menu = None
-    settings = None
+    animated_bg = None
 
     # Event loop
     while True:
@@ -36,7 +37,7 @@ def main():
                 elif game_state == game.GameStates.LEVEL_BROWSER:
                     level_browser.button_tick()
                 elif game_state == game.GameStates.SETTINGS:
-                    settings.render(game.GameWindow.screen).button_tick()
+                    Settings().render(game.GameWindow.screen).button_tick()
             elif event.type == pygame.KEYDOWN:
                 if game_state == game.GameStates.TUTORIAL:
                     if event.key == pygame.K_ESCAPE:
@@ -44,21 +45,24 @@ def main():
 
         GameWindow.screen.blit(game.GameWindow.game_background, (0, 0))
         if game_state == game.GameStates.LEVEL_BROWSER:
+            animated_bg = None
             if not level_browser:
                 level_browser = LevelBrowser().load()
             else:
                 level_browser.load().render(game.GameWindow.screen)
                 level_loaded = None
         elif game_state == game.GameStates.MAIN_MENU:
+            if not animated_bg:
+                animated_bg = AnimatedBg()
+            animated_bg.render(game.GameWindow.screen)
             tutorial_loaded = None
             if not main_menu:
                 main_menu = MainMenu()
             else:
                 main_menu.render(game.GameWindow.screen)
         elif game_state == game.GameStates.SETTINGS:
-            if not settings:
-                settings = Settings()
-            settings.render(game.GameWindow.screen)
+            animated_bg.render(game.GameWindow.screen)
+            Settings().render(game.GameWindow.screen)
         elif game_state == game.GameStates.PLAYING_LEVEL:
             if not level_loaded:
                 level_loaded = PlayScene(game.GameWindow.level_running)
@@ -66,6 +70,7 @@ def main():
                 level_loaded.play(game.GameWindow.screen)
                 level_browser = None
         elif game_state == game.GameStates.TUTORIAL:
+            animated_bg = None
             if not tutorial_loaded or tutorial_loaded.is_finished():
                 tutorial_loaded = GameTutorial().load()
             else:
