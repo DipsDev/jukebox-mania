@@ -39,8 +39,10 @@ def main():
                 elif game_state == game.GameStates.SETTINGS:
                     Settings().render(game.GameWindow.screen).button_tick()
             elif event.type == pygame.KEYDOWN:
-                if game_state == game.GameStates.TUTORIAL:
-                    if event.key == pygame.K_ESCAPE:
+                if event.key == pygame.K_ESCAPE:
+                    if game_state == game.GameStates.TUTORIAL\
+                            or game_state == game.GameStates.LEVEL_BROWSER\
+                            or game_state == game.GameStates.SETTINGS:
                         game.GameWindow.game_state = game.GameStates.MAIN_MENU
 
         GameWindow.screen.blit(game.GameWindow.game_background, (0, 0))

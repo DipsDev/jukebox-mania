@@ -26,13 +26,16 @@ class Level:
         self.__song_progression = 0
         self.__time_from_last_call_ms = self.__bpm_in_ms
 
+        self.__high_score_announced = False
+        self.__high_score_timer = 0
+
         self.__keys_bg = asset_loader.keys_background.convert()
 
     def start(self):
         game.GameWindow.game_background.blit(asset_loader.background_img.convert(), (0, 0))
         game.GameWindow.level_running = self
         game.GameWindow.combo_counter = 0
-        song_name = asset_loader.medium_font.render(
+        song_name = asset_loader.mediun_bold_font.render(
             f"Currently Playing: {self.__level_data.song_data.song_name.title()}",
             True,
             (229, 161, 89))
@@ -53,6 +56,10 @@ class Level:
             self.__level_score += score
             game.GameWindow.combo_counter = 0
         self.__level_score = max(self.__level_score, 0)
+        song_id = Utils.encode_string(self.__level_data.song_data.song_name)
+        if not self.__high_score_announced and self.__level_score > Utils.get_high_score(song_id):
+            self.__high_score_announced = True
+            self.__high_score_timer = 200
 
     def generate_new_notes(self):
         for index, note_length in enumerate(self.__level_data.tile_data[self.__line_counter]):
@@ -98,6 +105,12 @@ class Level:
         surface.blit(level_score, level_score.get_rect(center=(1440 / 2, 100)))
         combo_counter = asset_loader.small_font.render(f"X {game.GameWindow.combo_counter}", True, (204, 190, 234))
         surface.blit(combo_counter, combo_counter.get_rect(center=(1440 / 2, 70)))
+        if self.__high_score_timer > 0:
+            new_high_score_announcment = asset_loader.announcment_font.render("New Highscore!", True, (255, 255, 255))
+            surface.blit(new_high_score_announcment,
+                         new_high_score_announcment.get_rect(center=(game.GameConstants.CENTER[0], 205)))
+            self.__high_score_timer -= 1
+
         for note in self.__active_notes:
             note.render(surface)
             note.move()

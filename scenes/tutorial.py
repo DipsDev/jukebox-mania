@@ -27,7 +27,7 @@ class GameTutorial:
 
     def load(self):
         game.GameWindow.game_background.blit(asset_loader.background_img, (0, 0))
-        text_top = asset_loader.medium_font.render(
+        text_top = asset_loader.mediun_bold_font.render(
             f"Learning the basics",
             True,
             (229, 161, 89))
@@ -69,7 +69,7 @@ class GameTutorial:
                 self.__waiting_timer -= 1
 
             if not self.__notes_sent[0]:
-                self.__active_notes.add(Note((615, -500), 2, game.f_key))
+                self.__active_notes.add(Note((615, -500), 7, game.f_key))
                 self.__notes_sent[0] = True
         elif self.__tutorial_state == 2:
             if len(self.__active_notes.sprites()) != 0:
@@ -92,7 +92,7 @@ class GameTutorial:
                 self.__waiting_timer -= 1
 
             if not self.__notes_sent[1]:
-                self.__active_notes.add(LongNote((615 + 220 - 4, -500), 4, game.j_key,
+                self.__active_notes.add(LongNote((615 + 220 - 4, -500), 6, game.j_key,
                                                  500 * 60 / 1000 *
                                                  4 * 6, 500 * 6))
                 self.__notes_sent[1] = True

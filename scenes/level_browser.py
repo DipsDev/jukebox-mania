@@ -36,8 +36,8 @@ class LevelBrowser:
         back_button = asset_loader.small_font.render("Back", True, (255, 255, 255))
         self.__back_button_rect = back_button.get_rect(center=(1440 - 120, 780))
         game.GameWindow.screen.blit(back_button, self.__back_button_rect)
-        for index, level_name in enumerate(self.__av_levels):
-            ticket = MusicTicket(level_name)
+        for index, level_data in enumerate(self.__av_levels):
+            ticket = MusicTicket(level_data)
             self.__music_tickets.append(ticket)
             ticket.render(surface, index)
 
