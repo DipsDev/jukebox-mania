@@ -38,7 +38,7 @@ class MusicTicket:
         song_artist = f"By {self.__song_artist.title()}".strip()
         song_difficulty = f"{self.__song_difficulty}"
 
-        high_score_font = asset_loader.small_font.render(f"Highest Score: {high_score}", True, (120, 120, 120))
+        high_score_font = asset_loader.small_font.render(f"Best Score: {high_score}", True, (120, 120, 120))
         song_title_font = asset_loader.medium_font.render(song_name, True, (255, 255, 255))
         song_artist_font = asset_loader.small_font.render(song_artist, True, (140, 140, 140))
         song_difficulty_font = asset_loader.small_font.render(song_difficulty, True, (71, 35, 64))

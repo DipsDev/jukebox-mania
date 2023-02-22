@@ -1,4 +1,5 @@
 import pygame.time
+from pygame import Surface
 
 import game
 from assets import asset_loader
@@ -25,6 +26,7 @@ class Level:
         self.__bpm_in_ms = Utils.from_bpm_to_ms(level_data.song_bpm)
         self.__song_progression = 0
         self.__time_from_last_call_ms = self.__bpm_in_ms
+        self.__is_paused = False
 
         self.__high_score_announced = False
         self.__high_score_timer = 0
@@ -41,12 +43,21 @@ class Level:
             (229, 161, 89))
         game.GameWindow.game_background.blit(song_name, (1440 / 2 - song_name.get_width() / 2, 130))
 
+    def pause(self):
+        self.__is_paused = not self.__is_paused
+        if self.__is_paused:
+            pygame.mixer.music.pause()
+        else:
+            self.__starting_timer = 300
+
     def start_music(self):
         if not game.GameConstants.DEBUG_MODE and not self.__music_started:
             pygame.mixer.music.set_volume(game.music_volume / 10)
             pygame.mixer.music.play()
             self.__time_from_last_call_ms = pygame.mixer.music.get_pos() + self.__bpm_in_ms
             self.__music_started = True
+        else:
+            pygame.mixer.music.unpause()
 
     def add_user_score(self, score: float):
         if score > 0:
@@ -76,8 +87,12 @@ class Level:
         self.__line_counter += 1
 
     def tick(self):
+        if self.__is_paused:
+            return
+
         if self.__starting_timer >= 0:
-            r = asset_loader.medium_font.render(f"Starting in {self.__starting_timer // 100 + 1}", True, (255, 255, 255))
+            r = asset_loader.medium_font.render(f"Starting in {self.__starting_timer // 100 + 1}", True,
+                                                (255, 255, 255))
             game.GameWindow.screen.blit(r, r.get_rect(center=(1440 / 2, 800 / 2)))
             self.__starting_timer -= 1
             return
@@ -113,6 +128,18 @@ class Level:
 
         for note in self.__active_notes:
             note.render(surface)
-            note.move()
+            if not self.__is_paused and self.__starting_timer <= 0:
+                note.move()
 
         surface.blit(self.__keys_bg, self.__keys_bg.get_rect(topleft=(204, 730)))
+
+        if self.__is_paused:
+            bg_black_alpha = Surface(game.GameConstants.DIMENSIONS)
+            bg_black_alpha.set_alpha(200)
+
+            surface.blit(bg_black_alpha, (0, 0))
+
+            level_paused_announcement = asset_loader.announcment_font.render("Level Paused, ESC to resume", True,
+                                                                             (255, 255, 255))
+            surface.blit(level_paused_announcement,
+                         level_paused_announcement.get_rect(center=(game.GameConstants.CENTER[0], 250)))

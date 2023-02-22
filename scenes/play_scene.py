@@ -16,3 +16,6 @@ class PlayScene:
         for keyboard_key in game.KEYBOARD_KEYS:
             keyboard_key.click_tick()
             keyboard_key.render(screen)
+
+    def toggle_pause(self):
+        self.__level.pause()
