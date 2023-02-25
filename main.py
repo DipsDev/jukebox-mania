@@ -48,7 +48,8 @@ def main():
                             or game_state == game.GameStates.SETTINGS:
                         game.GameWindow.game_state = game.GameStates.MAIN_MENU
                     if game_state == game.GameStates.PLAYING_LEVEL:
-                        level_loaded.toggle_pause()
+                        if level_loaded:
+                            level_loaded.toggle_pause()
 
         GameWindow.screen.blit(game.GameWindow.game_background, (0, 0))
         if game_state == game.GameStates.LEVEL_BROWSER:

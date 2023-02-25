@@ -12,7 +12,7 @@ bold_font = pygame.font.Font("./assets/fonts/NicoBold-Regular.ttf", 30)
 medium_bold_font = pygame.font.Font("./assets/fonts/NicoBold-Regular.ttf", 20)
 medium_font = pygame.font.Font("./assets/fonts/NicoClean-Regular.ttf", 20)
 small_font = pygame.font.Font("./assets/fonts/NicoClean-Regular.ttf", 15)
-announcment_font = pygame.font.Font("./assets/fonts/NicoBold-Regular.ttf", 20)
+announcement_font = pygame.font.Font("./assets/fonts/NicoBold-Regular.ttf", 20)
 
 # Sounds
 HIT_SOUND = pygame.mixer.Sound('./assets/sounds/hitsound.wav')

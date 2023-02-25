@@ -109,8 +109,8 @@ class Level:
         bg_black_alpha.set_alpha(200)
         surface.blit(bg_black_alpha, (0, 0))
 
-        level_paused_announcement = asset_loader.announcment_font.render("Level Paused", True,
-                                                                         (255, 255, 255))
+        level_paused_announcement = asset_loader.announcement_font.render("Level Paused", True,
+                                                                          (255, 255, 255))
         esc_to_resume = asset_loader.small_font.render("ESC to resume", True, (111, 111, 111))
 
         main_menu_button = asset_loader.medium_font.render("Main Menu", True, (255, 255, 255))
@@ -159,7 +159,7 @@ class Level:
         combo_counter = asset_loader.small_font.render(f"X {game.GameWindow.combo_counter}", True, (204, 190, 234))
         surface.blit(combo_counter, combo_counter.get_rect(center=(1440 / 2, 70)))
         if self.__high_score_timer > 0:
-            new_high_score_announcment = asset_loader.announcment_font.render("New Highscore!", True, (255, 255, 255))
+            new_high_score_announcment = asset_loader.announcement_font.render("New Highscore!", True, (255, 255, 255))
             surface.blit(new_high_score_announcment,
                          new_high_score_announcment.get_rect(center=(game.GameConstants.CENTER[0], 205)))
             self.__high_score_timer -= 1
