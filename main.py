@@ -4,6 +4,7 @@ import pygame
 
 import game
 from components.animated_bg import AnimatedBg
+from level import Level
 from scenes.level_browser import LevelBrowser
 from scenes.main_menu import MainMenu
 from scenes.play_scene import PlayScene
@@ -38,6 +39,8 @@ def main():
                     level_browser.button_tick()
                 elif game_state == game.GameStates.SETTINGS:
                     Settings().render(game.GameWindow.screen).button_tick()
+                elif game_state == game.GameStates.PLAYING_LEVEL:
+                    game.GameWindow.level_running.button_tick()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     if game_state == game.GameStates.TUTORIAL\
@@ -67,9 +70,14 @@ def main():
         elif game_state == game.GameStates.SETTINGS:
             animated_bg.render(game.GameWindow.screen)
             Settings().render(game.GameWindow.screen)
-        elif game_state == game.GameStates.PLAYING_LEVEL:
+        elif game_state == game.GameStates.PLAYING_LEVEL or game_state == game.GameStates.RESTARTING_LEVEL:
             if not level_loaded:
                 level_loaded = PlayScene(game.GameWindow.level_running)
+            elif game_state == game.GameStates.RESTARTING_LEVEL:
+                new_level = Level(game.GameWindow.level_running.get_level_data(), game.KEYBOARD_KEYS)
+                level_loaded = PlayScene(new_level)
+                game.GameWindow.level_running = new_level
+                game.GameWindow.game_state = game.GameStates.PLAYING_LEVEL
             else:
                 level_loaded.play(game.GameWindow.screen)
                 level_browser = None

@@ -18,7 +18,7 @@ class MusicTicket:
         mouse = pygame.mouse
         if self.__padding_rect.collidepoint(
                 mouse.get_pos()):
-            level_data = LevelLoader().load_level_beatmap(self.__song_id.replace(" ", "_").lower())
+            level_data = LevelLoader().load_level_beatmap(Utils.encode_string(self.__song_id))
             level = Level(level_data, game.KEYBOARD_KEYS)
             game.GameWindow.level_running = level
             game.GameWindow.game_state = game.GameStates.PLAYING_LEVEL

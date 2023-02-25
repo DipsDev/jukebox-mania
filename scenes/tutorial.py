@@ -27,7 +27,7 @@ class GameTutorial:
 
     def load(self):
         game.GameWindow.game_background.blit(asset_loader.background_img, (0, 0))
-        text_top = asset_loader.mediun_bold_font.render(
+        text_top = asset_loader.medium_bold_font.render(
             f"Learning the basics",
             True,
             (229, 161, 89))

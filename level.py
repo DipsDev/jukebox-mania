@@ -3,6 +3,7 @@ from pygame import Surface
 
 import game
 from assets import asset_loader
+from assets.asset_loader import CLICK_SOUND
 from components.long_note import LongNote
 from components.note import Note
 from utils import Utils
@@ -31,17 +32,34 @@ class Level:
         self.__high_score_announced = False
         self.__high_score_timer = 0
 
+        self.__menu_buttons = []
+
         self.__keys_bg = asset_loader.keys_background.convert()
+
+    def get_level_data(self):
+        return self.__level_data
 
     def start(self):
         game.GameWindow.game_background.blit(asset_loader.background_img.convert(), (0, 0))
         game.GameWindow.level_running = self
         game.GameWindow.combo_counter = 0
-        song_name = asset_loader.mediun_bold_font.render(
+        song_name = asset_loader.medium_bold_font.render(
             f"Currently Playing: {self.__level_data.song_data.song_name.title()}",
             True,
             (229, 161, 89))
         game.GameWindow.game_background.blit(song_name, (1440 / 2 - song_name.get_width() / 2, 130))
+
+    def button_tick(self):
+        mouse = pygame.mouse
+        for name, rect in self.__menu_buttons:
+            if rect.collidepoint(
+                    mouse.get_pos()):
+                CLICK_SOUND.set_volume(game.fx_volume / 100)
+                CLICK_SOUND.play()
+                if name == 'restart level':
+                    game.GameWindow.game_state = game.GameStates.RESTARTING_LEVEL
+                elif name == "main menu":
+                    game.GameWindow.game_state = game.GameStates.MAIN_MENU
 
     def pause(self):
         self.__is_paused = not self.__is_paused
@@ -85,6 +103,26 @@ class Level:
             if note_length == NOTE:
                 self.__active_notes.add(Note(pos, self.__level_data.level_speed, self.__keys[index]))
         self.__line_counter += 1
+
+    def __render_menu(self, surface):
+        bg_black_alpha = Surface(game.GameConstants.DIMENSIONS)
+        bg_black_alpha.set_alpha(200)
+        surface.blit(bg_black_alpha, (0, 0))
+
+        level_paused_announcement = asset_loader.announcment_font.render("Level Paused", True,
+                                                                         (255, 255, 255))
+        esc_to_resume = asset_loader.small_font.render("ESC to resume", True, (111, 111, 111))
+
+        main_menu_button = asset_loader.medium_font.render("Main Menu", True, (255, 255, 255))
+        restart_button = asset_loader.medium_font.render("Restart Level", True, (255, 255, 255))
+        self.__menu_buttons.append(("main menu", main_menu_button.get_rect(center=(game.GameConstants.CENTER[0], 300))))
+        self.__menu_buttons.append(("restart level", restart_button.get_rect(center=(game.GameConstants.CENTER[0], 350))))
+
+        surface.blit(level_paused_announcement,
+                     level_paused_announcement.get_rect(center=(game.GameConstants.CENTER[0], 250)))
+        surface.blit(main_menu_button, main_menu_button.get_rect(center=(game.GameConstants.CENTER[0], 300)))
+        surface.blit(restart_button, restart_button.get_rect(center=(game.GameConstants.CENTER[0], 350)))
+        surface.blit(esc_to_resume, esc_to_resume.get_rect(center=(game.GameConstants.CENTER[0], 400)))
 
     def tick(self):
         if self.__is_paused:
@@ -134,12 +172,4 @@ class Level:
         surface.blit(self.__keys_bg, self.__keys_bg.get_rect(topleft=(204, 730)))
 
         if self.__is_paused:
-            bg_black_alpha = Surface(game.GameConstants.DIMENSIONS)
-            bg_black_alpha.set_alpha(200)
-
-            surface.blit(bg_black_alpha, (0, 0))
-
-            level_paused_announcement = asset_loader.announcment_font.render("Level Paused, ESC to resume", True,
-                                                                             (255, 255, 255))
-            surface.blit(level_paused_announcement,
-                         level_paused_announcement.get_rect(center=(game.GameConstants.CENTER[0], 250)))
+            self.__render_menu(surface)

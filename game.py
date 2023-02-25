@@ -15,6 +15,7 @@ class GameStates(str, Enum):
     MAIN_MENU = "main_menu"
     SETTINGS = "settings"
     TUTORIAL = 'tutorial_lvl'
+    RESTARTING_LEVEL = "lvl_restarting"
 
 
 class GameConstants:
