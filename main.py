@@ -71,17 +71,18 @@ def main():
         elif game_state == game.GameStates.SETTINGS:
             animated_bg.render(game.GameWindow.screen)
             Settings().render(game.GameWindow.screen)
-        elif game_state == game.GameStates.PLAYING_LEVEL or game_state == game.GameStates.RESTARTING_LEVEL:
+        elif game_state == game.GameStates.PLAYING_LEVEL:
             if not level_loaded:
                 level_loaded = PlayScene(game.GameWindow.level_running)
-            elif game_state == game.GameStates.RESTARTING_LEVEL:
-                new_level = Level(game.GameWindow.level_running.get_level_data(), game.KEYBOARD_KEYS)
-                level_loaded = PlayScene(new_level)
-                game.GameWindow.level_running = new_level
-                game.GameWindow.game_state = game.GameStates.PLAYING_LEVEL
+                level_browser = None
             else:
                 level_loaded.play(game.GameWindow.screen)
-                level_browser = None
+        elif game_state == game.GameStates.RESTARTING_LEVEL:
+            game.GameWindow.game_state = game.GameStates.PLAYING_LEVEL
+            new_level = Level(game.GameWindow.level_running.get_level_data(), game.KEYBOARD_KEYS)
+            game.GameWindow.level_running = new_level
+            level_loaded = PlayScene(new_level)
+
         elif game_state == game.GameStates.TUTORIAL:
             animated_bg = None
             if not tutorial_loaded or tutorial_loaded.is_finished():

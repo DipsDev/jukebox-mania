@@ -86,7 +86,8 @@ class Level:
             game.GameWindow.combo_counter = 0
         self.__level_score = max(self.__level_score, 0)
         song_id = Utils.encode_string(self.__level_data.song_data.song_name)
-        if not self.__high_score_announced and self.__level_score > Utils.get_high_score(song_id):
+        database_score = Utils.get_high_score(song_id)
+        if not self.__high_score_announced and database_score and self.__level_score > database_score:
             self.__high_score_announced = True
             self.__high_score_timer = 200
 
