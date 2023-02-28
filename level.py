@@ -3,6 +3,7 @@ from pygame import Surface
 
 import game
 from assets import asset_loader
+from components import note
 from components.long_note import LongNote
 from components.note import Note
 from utils import Utils
@@ -34,6 +35,8 @@ class Level:
         self.__menu_buttons = []
 
         self.__keys_bg = asset_loader.keys_background.convert()
+
+        self.__database_score = Utils.get_high_score(self.__level_data.song_data.song_name)
 
     def get_level_data(self):
         return self.__level_data
@@ -84,9 +87,7 @@ class Level:
             self.__level_score += score
             game.GameWindow.combo_counter = 0
         self.__level_score = max(self.__level_score, 0)
-        song_id = Utils.encode_string(self.__level_data.song_data.song_name)
-        database_score = Utils.get_high_score(song_id)
-        if not self.__high_score_announced and database_score and self.__level_score > database_score:
+        if not self.__high_score_announced and self.__database_score and self.__level_score > self.__database_score:
             self.__high_score_announced = True
             self.__high_score_timer = 200
 
@@ -116,7 +117,8 @@ class Level:
         main_menu_button = asset_loader.medium_font.render("Main Menu", True, (255, 255, 255))
         restart_button = asset_loader.medium_font.render("Restart Level", True, (255, 255, 255))
         self.__menu_buttons.append(("main menu", main_menu_button.get_rect(center=(game.GameConstants.CENTER[0], 300))))
-        self.__menu_buttons.append(("restart level", restart_button.get_rect(center=(game.GameConstants.CENTER[0], 350))))
+        self.__menu_buttons.append(
+            ("restart level", restart_button.get_rect(center=(game.GameConstants.CENTER[0], 350))))
 
         surface.blit(level_paused_announcement,
                      level_paused_announcement.get_rect(center=(game.GameConstants.CENTER[0], 250)))
@@ -164,10 +166,10 @@ class Level:
                          new_high_score_announcment.get_rect(center=(game.GameConstants.CENTER[0], 205)))
             self.__high_score_timer -= 1
 
-        for note in self.__active_notes:
-            note.render(surface)
+        for nt in self.__active_notes:
+            nt.render(surface)
             if not self.__is_paused and self.__starting_timer <= 0:
-                note.move()
+                nt.move()
 
         surface.blit(self.__keys_bg, self.__keys_bg.get_rect(topleft=(204, 730)))
 

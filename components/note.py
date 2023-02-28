@@ -4,8 +4,6 @@ import game
 from components.keyboard_button import KeyboardButton
 from utils import Utils
 
-track1_move_next_time = 0
-
 
 class Note(pygame.sprite.Sprite):
     def __init__(self, pos: tuple, tile_speed: float, adjacent_key: KeyboardButton):
@@ -30,15 +28,13 @@ class Note(pygame.sprite.Sprite):
         if (d <= game.GameConstants.TOLERANCE_OFFSET or self._sprite.get_rect().colliderect(
                 self._adjacent_key.get_rect())) and self._adjacent_key.is_clicked():
             self.kill()
-            # NOTE: This line makes the game not responsive.
-            # game.HIT_SOUND.play()
+            game.HIT_SOUND.play()
             if game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
                 game.GameWindow.level_running.add_user_score(25)
         if self._pos[1] >= 800 + self._sprite.get_height() + 10:
             if game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
                 game.GameWindow.level_running.add_user_score(-15)
             self.kill()
-
 
     def render(self, surface: pygame.Surface):
         surface.blit(self._sprite, self._sprite.get_rect(center=self._pos))
