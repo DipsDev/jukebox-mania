@@ -2,11 +2,13 @@ from enum import Enum
 
 import pygame
 
+from assets import asset_loader
 from database.database import Database
 from level import Level
 from components.keyboard_button import KeyboardButton
 
 pygame.init()
+pygame.mixer.init()
 
 
 class GameStates(str, Enum):
@@ -47,8 +49,14 @@ f_key = KeyboardButton("F", (615, GameConstants.KEYS_HEIGHT), pygame.K_f, "green
 d_key = KeyboardButton("D", (395, GameConstants.KEYS_HEIGHT), pygame.K_d, "yellow")
 j_key = KeyboardButton("J", (615 + 220 - 4, GameConstants.KEYS_HEIGHT), pygame.K_j, "blue")
 k_key = KeyboardButton("K", (615 + 220 * 2 + 9, GameConstants.KEYS_HEIGHT), pygame.K_k, "pink")
-KEYBOARD_KEYS = [f_key, d_key, j_key, k_key]
+KEYBOARD_KEYS = [d_key, f_key, j_key, k_key]
 
 # Sound Settings
 music_volume = GameWindow.database.get_data("music_volume")
 fx_volume = GameWindow.database.get_data("fx_volume")
+
+# Sounds
+HIT_SOUND = pygame.mixer.Sound('./assets/sounds/hitsound.wav')
+CLICK_SOUND = pygame.mixer.Sound("./assets/sounds/clicksound.wav")
+
+HIT_SOUND.set_volume(fx_volume / 100)

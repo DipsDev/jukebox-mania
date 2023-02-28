@@ -1,6 +1,5 @@
 import pygame
 
-pygame.mixer.init()
 pygame.font.init()
 
 background_img = pygame.image.load("./assets/background.png")
@@ -14,8 +13,5 @@ medium_font = pygame.font.Font("./assets/fonts/NicoClean-Regular.ttf", 20)
 small_font = pygame.font.Font("./assets/fonts/NicoClean-Regular.ttf", 15)
 announcement_font = pygame.font.Font("./assets/fonts/NicoBold-Regular.ttf", 20)
 
-# Sounds
-HIT_SOUND = pygame.mixer.Sound('./assets/sounds/hitsound.wav')
-CLICK_SOUND = pygame.mixer.Sound("./assets/sounds/clicksound.wav")
 
 keys_background = pygame.image.load("./assets/keys_background.png")

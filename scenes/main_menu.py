@@ -4,7 +4,6 @@ import pygame
 
 import game
 from assets import asset_loader
-from assets.asset_loader import CLICK_SOUND
 
 
 class MainMenu:
@@ -17,8 +16,8 @@ class MainMenu:
         for name, rect in self.__rects:
             if rect.collidepoint(
                     mouse.get_pos()):
-                CLICK_SOUND.set_volume(game.fx_volume / 100)
-                CLICK_SOUND.play()
+                game.CLICK_SOUND.set_volume(game.fx_volume / 100)
+                game.CLICK_SOUND.play()
                 if name == 'song browser':
                     game.GameWindow.game_state = game.GameStates.LEVEL_BROWSER
                 elif name == "settings":

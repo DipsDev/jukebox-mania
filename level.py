@@ -3,7 +3,6 @@ from pygame import Surface
 
 import game
 from assets import asset_loader
-from assets.asset_loader import CLICK_SOUND
 from components.long_note import LongNote
 from components.note import Note
 from utils import Utils
@@ -54,8 +53,8 @@ class Level:
         for name, rect in self.__menu_buttons:
             if rect.collidepoint(
                     mouse.get_pos()):
-                CLICK_SOUND.set_volume(game.fx_volume / 100)
-                CLICK_SOUND.play()
+                game.CLICK_SOUND.set_volume(game.fx_volume / 100)
+                game.CLICK_SOUND.play()
                 if name == 'restart level':
                     game.GameWindow.game_state = game.GameStates.RESTARTING_LEVEL
                 elif name == "main menu":

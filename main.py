@@ -31,6 +31,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.GameWindow.database.save()
+                pygame.quit()
                 sys.exit(1)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if game_state == game.GameStates.MAIN_MENU:

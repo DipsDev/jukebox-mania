@@ -2,7 +2,6 @@ import pygame
 
 import game
 from assets import asset_loader
-from assets.asset_loader import CLICK_SOUND
 
 
 class Settings:
@@ -17,22 +16,22 @@ class Settings:
                 print(game.music_volume)
                 if name == 'volume_up_music':
                     game.music_volume = min(game.music_volume + 10, 100)
-                    CLICK_SOUND.set_volume(game.music_volume / 100)
-                    CLICK_SOUND.play()
+                    game.CLICK_SOUND.set_volume(game.music_volume / 100)
+                    game.CLICK_SOUND.play()
                 elif name == "volume_down_music":
                     game.music_volume = max(game.music_volume - 10, 0)
-                    CLICK_SOUND.set_volume(game.music_volume / 100)
-                    CLICK_SOUND.play()
+                    game.CLICK_SOUND.set_volume(game.music_volume / 100)
+                    game.CLICK_SOUND.play()
                 elif name == "back":
                     game.GameWindow.game_state = game.GameStates.MAIN_MENU
                 elif name == "volume_down_fx":
                     game.fx_volume = max(game.fx_volume - 10, 0)
-                    CLICK_SOUND.set_volume(game.fx_volume / 100)
-                    CLICK_SOUND.play()
+                    game.CLICK_SOUND.set_volume(game.fx_volume / 100)
+                    game.CLICK_SOUND.play()
                 elif name == "volume_up_fx":
                     game.fx_volume = min(game.fx_volume + 10, 100)
-                    CLICK_SOUND.set_volume(game.fx_volume / 100)
-                    CLICK_SOUND.play()
+                    game.CLICK_SOUND.set_volume(game.fx_volume / 100)
+                    game.HIT_SOUND.set_volume(game.fx_volume / 100)
 
     def render(self, surface: pygame.Surface):
         text_color = (255, 255, 255)
