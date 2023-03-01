@@ -17,6 +17,7 @@ class Level:
         self.__keys = keys
         self.__line_counter = 0
         self.__music_started = False
+        self.__music_continued = True
         self.__starting_timer = 300
         self.__ending_timer = 300
         self.__level_score = 0
@@ -68,6 +69,7 @@ class Level:
             pygame.mixer.music.pause()
         else:
             self.__starting_timer = 300
+            self.__music_continued = False
 
     def start_music(self):
         if not game.GameConstants.DEBUG_MODE and not self.__music_started:
@@ -75,6 +77,10 @@ class Level:
             pygame.mixer.music.play()
             self.__time_from_last_call_ms = pygame.mixer.music.get_pos() + self.__bpm_in_ms
             self.__music_started = True
+
+        if not self.__music_continued and self.__starting_timer <= 0:
+            pygame.mixer.music.unpause()
+            self.__music_continued = True
 
     def add_user_score(self, score: float):
         if score > 0:
