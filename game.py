@@ -2,7 +2,6 @@ from enum import Enum
 
 import pygame
 
-from assets import asset_loader
 from database.database import Database
 from level import Level
 from components.keyboard_button import KeyboardButton

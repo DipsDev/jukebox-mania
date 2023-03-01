@@ -38,7 +38,7 @@ class MainMenu:
         text_color = (255, 255, 255)
 
         # Variables
-        main_title = asset_loader.bold_font.render("Jukebox Mania", True, text_color)
+        main_title = asset_loader.main_font.render("Jukebox Mania", True, text_color)
         copyright_text = asset_loader.small_font.render('A Game By Ido Geva', True, text_color)
 
         # Buttons

@@ -10,7 +10,7 @@ class Database:
 
     def load(self):
         if self.__is_loaded:
-            return self
+            return
         self.__is_loaded = True
         with open("./database/db.json", 'r') as f:
             self.__data = json.load(f)

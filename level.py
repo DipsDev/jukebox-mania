@@ -3,7 +3,6 @@ from pygame import Surface
 
 import game
 from assets import asset_loader
-from components import note
 from components.long_note import LongNote
 from components.note import Note
 from utils import Utils
@@ -45,7 +44,7 @@ class Level:
         game.GameWindow.game_background.blit(asset_loader.background_img.convert(), (0, 0))
         game.GameWindow.level_running = self
         game.GameWindow.combo_counter = 0
-        song_name = asset_loader.medium_bold_font.render(
+        song_name = asset_loader.medium_font.render(
             f"Currently Playing: {self.__level_data.song_data.song_name.title()}",
             True,
             (229, 161, 89))
@@ -76,8 +75,6 @@ class Level:
             pygame.mixer.music.play()
             self.__time_from_last_call_ms = pygame.mixer.music.get_pos() + self.__bpm_in_ms
             self.__music_started = True
-        else:
-            pygame.mixer.music.unpause()
 
     def add_user_score(self, score: float):
         if score > 0:

@@ -22,23 +22,27 @@ class Settings:
                     game.music_volume = max(game.music_volume - 10, 0)
                     game.CLICK_SOUND.set_volume(game.music_volume / 100)
                     game.CLICK_SOUND.play()
+                elif name == "volume_down_music":
+                    game.music_volume = max(game.music_volume - 10, 0)
                 elif name == "back":
                     game.GameWindow.game_state = game.GameStates.MAIN_MENU
                 elif name == "volume_down_fx":
+
                     game.fx_volume = max(game.fx_volume - 10, 0)
                     game.CLICK_SOUND.set_volume(game.fx_volume / 100)
                     game.CLICK_SOUND.play()
                 elif name == "volume_up_fx":
                     game.fx_volume = min(game.fx_volume + 10, 100)
                     game.CLICK_SOUND.set_volume(game.fx_volume / 100)
-                    game.HIT_SOUND.set_volume(game.fx_volume / 100)
+                elif name == "volume_up_fx":
+                    game.fx_volume = min(game.fx_volume + 10, 100)
 
     def render(self, surface: pygame.Surface):
         text_color = (255, 255, 255)
 
         # Main titles
-        settings_title = asset_loader.bold_font.render("Settings", True, text_color)
-        copyright_text = asset_loader.small_font.render('A Game By Ido Geva', True, text_color)
+        settings_title = asset_loader.main_font.render("Settings", True, text_color)
+        copyright = asset_loader.small_font.render('A Game By Ido Geva', True, text_color)
 
         # Labels
         volume_font = asset_loader.medium_font.render("Music Volume", True, text_color)
@@ -83,6 +87,6 @@ class Settings:
         surface.blit(volume_progress, volume_progress.get_rect(bottomleft=(game.GameConstants.CENTER[0] - 89, 200)))
         surface.blit(volume_font, volume_font.get_rect(center=(game.GameConstants.CENTER[0], 150)))
         surface.blit(settings_title, settings_title.get_rect(center=(game.GameConstants.CENTER[0], 50)))
-        surface.blit(copyright_text, copyright_text.get_rect(center=(120, 780)))
+        surface.blit(copyright, copyright.get_rect(center=(120, 780)))
 
         return self

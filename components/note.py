@@ -31,6 +31,7 @@ class Note(pygame.sprite.Sprite):
             game.HIT_SOUND.play()
             if game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
                 game.GameWindow.level_running.add_user_score(25)
+        # Tile exits the screen
         if self._pos[1] >= 800 + self._sprite.get_height() + 10:
             if game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
                 game.GameWindow.level_running.add_user_score(-15)

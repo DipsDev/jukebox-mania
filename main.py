@@ -43,14 +43,12 @@ def main():
                 elif game_state == game.GameStates.PLAYING_LEVEL:
                     game.GameWindow.level_running.button_tick()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    if game_state == game.GameStates.TUTORIAL\
-                            or game_state == game.GameStates.LEVEL_BROWSER\
-                            or game_state == game.GameStates.SETTINGS:
+                if game_state == game.GameStates.TUTORIAL:
+                    if event.key == pygame.K_ESCAPE:
                         game.GameWindow.game_state = game.GameStates.MAIN_MENU
-                    if game_state == game.GameStates.PLAYING_LEVEL:
-                        if level_loaded:
-                            level_loaded.toggle_pause()
+                if game_state == game.GameStates.PLAYING_LEVEL:
+                    if level_loaded and event.key == pygame.K_ESCAPE:
+                        level_loaded.toggle_pause()
 
         GameWindow.screen.blit(game.GameWindow.game_background, (0, 0))
         if game_state == game.GameStates.LEVEL_BROWSER:
