@@ -5,7 +5,7 @@ from collections import ChainMap
 class Utils:
     @staticmethod
     def from_bpm_to_ms(bpm: int):
-        return 60_000 / bpm
+        return 60_000 / bpm / 2
 
     @staticmethod
     def get_distance(pos1y, pos2y):
