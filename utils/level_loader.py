@@ -34,6 +34,8 @@ class LevelLoader:
                 elif line.startswith("TILES"):
                     reading_tiles = True
                 elif reading_tiles:
+                    if line.startswith("#"):
+                        continue
                     tile_data.append(line)
 
         if not bpm or len(tile_data) == 0:

@@ -15,7 +15,7 @@ class AnimatedBg:
         if pygame.time.get_ticks() >= self.__spawning_time:
             key_index = random.randint(0, 3)
             key = game.KEYBOARD_KEYS[key_index]
-            self.__active_notes.add(Note((key.get_pos()[0], -100), 8, key))
+            self.__active_notes.add(Note((key.get_pos()[0], -100), 10, key))
             self.__spawning_time += 500
         for note in self.__active_notes:
             note.render(surface)
