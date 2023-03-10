@@ -54,7 +54,7 @@ class MainMenu:
 
         # Blits
         surface.blit(main_title, main_title.get_rect(center=(game.GameConstants.CENTER[0], 50)))
-        surface.blit(copyright_text, copyright_text.get_rect(center=(120, 780)))
+        surface.blit(copyright_text, copyright_text.get_rect(center=(105, 780)))
         surface.blit(song_browser, song_browser.get_rect(center=(game.GameConstants.CENTER[0], 200)))
         surface.blit(tutorial, tutorial.get_rect(center=(game.GameConstants.CENTER[0], 300)))
         surface.blit(settings, settings.get_rect(center=(game.GameConstants.CENTER[0], 400)))

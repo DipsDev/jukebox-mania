@@ -40,9 +40,9 @@ class LevelLoader:
 
         if not bpm or len(tile_data) == 0:
             print('Invalid level data:', name)
-        music_path = f"./assets/levels/audio.wav"
+        music_path = f"./assets/levels/{name}/audio.wav"
         if not os.path.exists(music_path):
-            raise Exception(f"Cannot find music file for level: '{name}'")
+            raise Exception(f"Cannot find music file for level: '{name}', Make sure the file is called 'audio.wav'")
 
         return LevelData(tile_data,
                          int(bpm),

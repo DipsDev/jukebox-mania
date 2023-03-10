@@ -57,6 +57,7 @@ class LongNote(Note):
                 game.GameWindow.level_running.add_user_score(
                     round(1.3 * min(self._holding_time_counter, int(self._holding_ms // 100))))
             self.__active = False
+            game.HIT_SOUND.play()
 
         # Note exits the screen
         if tail[1] >= 1.1 * round(self._height + self._original_height):

@@ -21,7 +21,7 @@ class GameStates(str, Enum):
 
 class GameConstants:
     COMBO_MULTIPLIER = 0.1
-    DEBUG_MODE = False  # Print variables or no
+    DEBUG_MODE = False  # Enable Debug mode or not
     GAME_FPS = 60
     KEYS_HEIGHT = 695
     TOLERANCE_OFFSET = 78  # Pixel difference tolerance

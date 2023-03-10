@@ -42,7 +42,7 @@ class Settings:
 
         # Main titles
         settings_title = asset_loader.main_font.render("Settings", True, text_color)
-        copyright = asset_loader.small_font.render('A Game By Ido Geva', True, text_color)
+        copyright_text = asset_loader.small_font.render('A Game By Ido Geva', True, text_color)
 
         # Labels
         volume_font = asset_loader.medium_font.render("Music Volume", True, text_color)
@@ -87,6 +87,6 @@ class Settings:
         surface.blit(volume_progress, volume_progress.get_rect(bottomleft=(game.GameConstants.CENTER[0] - 89, 200)))
         surface.blit(volume_font, volume_font.get_rect(center=(game.GameConstants.CENTER[0], 150)))
         surface.blit(settings_title, settings_title.get_rect(center=(game.GameConstants.CENTER[0], 50)))
-        surface.blit(copyright, copyright.get_rect(center=(120, 780)))
+        surface.blit(copyright_text, copyright_text.get_rect(center=(105, 780)))
 
         return self

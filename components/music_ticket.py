@@ -44,13 +44,19 @@ class MusicTicket:
         song_difficulty_font = asset_loader.small_font.render(song_difficulty, True, (71, 35, 64))
 
         offset = GAP * index
+        y_offset = 0
+        if 6 > index >= 3:
+            offset = GAP * (index % 3)
+            y_offset = base_pos[1] - 25
 
         rect_box = pygame.Surface((277, 135))
-        self.__padding_rect = rect_box.get_rect(center=(base_pos[0] + offset - 4, base_pos[1] - 6))
+        self.__padding_rect = rect_box.get_rect(center=(base_pos[0] + offset - 4, base_pos[1] - 6 + y_offset))
 
         # Blit ------------------
         surface.blit(song_difficulty_font,
-                     song_difficulty_font.get_rect(center=(base_pos[0] + offset, base_pos[1] - 55)))
-        surface.blit(high_score_font, high_score_font.get_rect(center=(base_pos[0] + offset, base_pos[1] - 30)))
-        surface.blit(song_artist_font, song_artist_font.get_rect(center=(base_pos[0] + offset, base_pos[1] + 30)))
-        surface.blit(song_title_font, song_title_font.get_rect(center=(base_pos[0] + offset, base_pos[1])))
+                     song_difficulty_font.get_rect(center=(base_pos[0] + offset, base_pos[1] - 55 + y_offset)))
+        surface.blit(high_score_font, high_score_font.get_rect(center=(base_pos[0] + offset,
+                                                                       base_pos[1] - 30 + y_offset)))
+        surface.blit(song_artist_font, song_artist_font.get_rect(center=(base_pos[0] + offset,
+                                                                         base_pos[1] + 30 + y_offset)))
+        surface.blit(song_title_font, song_title_font.get_rect(center=(base_pos[0] + offset, base_pos[1] + y_offset)))

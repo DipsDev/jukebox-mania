@@ -41,6 +41,8 @@ class Database:
         self.__data[tag] = new_data
 
     def set_data(self, tag: str, new_data):
+        if game.GameConstants.DEBUG_MODE:
+            return
         if type(new_data) == dict:
             return self.set_data_dict(tag, new_data)
         else:
