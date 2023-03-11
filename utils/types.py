@@ -9,7 +9,7 @@ class Song(NamedTuple):
 
 @dataclasses.dataclass
 class LevelData:
-    tile_data: list
+    tile_data: list[str]
     song_bpm: int
     level_speed: float
     music_path: str

@@ -73,7 +73,7 @@ class Level:
 
     def start_music(self):
         if not game.GameConstants.DEBUG_MODE and not self.__music_started:
-            pygame.mixer.music.set_volume(game.music_volume / 10)
+            pygame.mixer.music.set_volume(game.music_volume / 100)
             pygame.mixer.music.play()
             self.__time_from_last_call_ms = pygame.mixer.music.get_pos() + self.__bpm_in_ms
             self.__music_started = True
@@ -166,7 +166,7 @@ class Level:
         if self.__high_score_timer > 0:
             new_high_score_announcment = asset_loader.announcement_font.render("New Highscore!", True, (255, 255, 255))
             surface.blit(new_high_score_announcment,
-                         new_high_score_announcment.get_rect(center=(game.GameConstants.CENTER[0], 205)))
+                         new_high_score_announcment.get_rect(center=(game.GameConstants.CENTER[0], 215)))
             self.__high_score_timer -= 1
 
         for nt in self.__active_notes:

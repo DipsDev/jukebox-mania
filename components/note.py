@@ -28,6 +28,7 @@ class Note(pygame.sprite.Sprite):
         if (d <= game.GameConstants.TOLERANCE_OFFSET or self._sprite.get_rect().colliderect(
                 self._adjacent_key.get_rect())) and self._adjacent_key.is_clicked():
             self.kill()
+            game.HIT_SOUND.set_volume(game.fx_volume / 100)
             game.HIT_SOUND.play()
             if game.GameWindow.game_state == game.GameStates.PLAYING_LEVEL:
                 game.GameWindow.level_running.add_user_score(25)

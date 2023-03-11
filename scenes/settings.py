@@ -22,20 +22,16 @@ class Settings:
                     game.music_volume = max(game.music_volume - 10, 0)
                     game.CLICK_SOUND.set_volume(game.music_volume / 100)
                     game.CLICK_SOUND.play()
-                elif name == "volume_down_music":
-                    game.music_volume = max(game.music_volume - 10, 0)
                 elif name == "back":
                     game.GameWindow.game_state = game.GameStates.MAIN_MENU
                 elif name == "volume_down_fx":
-
                     game.fx_volume = max(game.fx_volume - 10, 0)
-                    game.CLICK_SOUND.set_volume(game.fx_volume / 100)
+                    game.CLICK_SOUND.set_volume(game.fx_volume / 10)
                     game.CLICK_SOUND.play()
                 elif name == "volume_up_fx":
                     game.fx_volume = min(game.fx_volume + 10, 100)
                     game.CLICK_SOUND.set_volume(game.fx_volume / 100)
-                elif name == "volume_up_fx":
-                    game.fx_volume = min(game.fx_volume + 10, 100)
+                    game.CLICK_SOUND.play()
 
     def render(self, surface: pygame.Surface):
         text_color = (255, 255, 255)
@@ -46,12 +42,12 @@ class Settings:
 
         # Labels
         volume_font = asset_loader.medium_font.render("Music Volume", True, text_color)
-        volume_progress_num = game.music_volume * 10 * (volume_font.get_width() / 1000)
+        volume_progress_num = game.music_volume * 2
         volume_progress = pygame.Surface((volume_progress_num, 15))
         volume_progress.fill(text_color)
 
         fx_font = asset_loader.medium_font.render("FX Volume", True, text_color)
-        fx_progress_num = game.fx_volume * 10 * (volume_font.get_width()) / 1000
+        fx_progress_num = game.fx_volume * 2
         fx_progress = pygame.Surface((fx_progress_num, 15))
         fx_progress.fill(text_color)
 

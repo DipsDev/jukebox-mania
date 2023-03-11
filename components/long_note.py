@@ -57,6 +57,7 @@ class LongNote(Note):
                 game.GameWindow.level_running.add_user_score(
                     round(1.3 * min(self._holding_time_counter, int(self._holding_ms // 100))))
             self.__active = False
+            game.HIT_SOUND.set_volume(game.fx_volume / 100)
             game.HIT_SOUND.play()
 
         # Note exits the screen

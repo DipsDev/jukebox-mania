@@ -8,8 +8,9 @@ from utils.level_loader import LevelLoader
 
 
 class MusicTicket:
-    def __init__(self, song_data):
+    def __init__(self, song_data, is_recommended=False):
         self.__padding_rect = None
+        self.__recommended = is_recommended
         self.__song_id = song_data[0]
         self.__song_artist = song_data[1]
         self.__song_difficulty = song_data[2]
@@ -38,6 +39,8 @@ class MusicTicket:
         song_artist = f"By {self.__song_artist.title()}".strip()
         song_difficulty = f"{self.__song_difficulty}"
 
+        recommended_text = asset_loader.small_font.render("Recommended", True, (240, 239, 105))
+
         high_score_font = asset_loader.small_font.render(f"Best Score: {high_score}", True, (120, 120, 120))
         song_title_font = asset_loader.medium_font.render(song_name, True, (255, 255, 255))
         song_artist_font = asset_loader.small_font.render(song_artist, True, (140, 140, 140))
@@ -60,3 +63,6 @@ class MusicTicket:
         surface.blit(song_artist_font, song_artist_font.get_rect(center=(base_pos[0] + offset,
                                                                          base_pos[1] + 30 + y_offset)))
         surface.blit(song_title_font, song_title_font.get_rect(center=(base_pos[0] + offset, base_pos[1] + y_offset)))
+        if self.__recommended:
+            rect = recommended_text.get_rect(center=(base_pos[0] + offset, base_pos[1] + y_offset - 85))
+            surface.blit(recommended_text, rect)

@@ -59,7 +59,8 @@ class LevelLoader:
             if child.is_dir() and LevelLoader.is_valid_level(child.name) and not child.name.startswith("__"):
                 levels.append((child.name.replace("_", " "),
                                LevelLoader.get_level_artist(child.name),
-                               LevelLoader.get_level_difficulty(child.name)))
+                               LevelLoader.get_level_difficulty(child.name),
+                               LevelLoader.is_level_recommended(child.name)))
             elif not LevelLoader.is_valid_level(child.name):
                 print(f"Invalid level: '{child.name}', ignoring...")
         return levels
@@ -89,3 +90,12 @@ class LevelLoader:
                 if line.startswith("ARTIST"):
                     artist = music_data[index + 1]
         return artist
+
+    @staticmethod
+    def is_level_recommended(level_name):
+        is_recommended = False
+        with open(f"./assets/levels/{level_name}/{level_name}.beatmap", 'r') as music_file:
+            music_file = music_file.readlines()
+            if music_file[0].startswith("RECOMMEND"):
+                is_recommended = True
+        return is_recommended
