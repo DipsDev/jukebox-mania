@@ -4,3 +4,5 @@
 *An osu! like game that tests your rhyme!*\
 This game was created as part as cyber project at school,\
 Feel free to use the project by any means.
+
+The project uses pygame and utilizes json to keep the high score even after reset.
